@@ -1,0 +1,557 @@
+{
+  "Fluxo_Completo_Operacao": {
+    "title": "Fluxo Completo – Checklist Inicial + Interrompido/Degradação/Falha Específica (IPD+VPN)",
+    "version": "1.1",
+    "start": "checklist_intro",
+    "steps": [
+      {
+        "id": "checklist_intro",
+        "type": "message",
+        "text": "CHECKLIST INICIAL – Contato com o cliente. Antes de classificar a falha, valide as informações abaixo.",
+        "next": "contato_cliente"
+      },
+      {
+        "id": "contato_cliente",
+        "type": "yesno",
+        "text": "Conseguiu contato com o cliente?",
+        "yes": "ci_chamado",
+        "no": "sem_contato_opcoes"
+      },
+      {
+        "id": "sem_contato_opcoes",
+        "type": "choice",
+        "text": "Sem contato. O que deseja fazer?",
+        "options": [
+          {
+            "label": "Tentar contato novamente agora",
+            "next": "contato_cliente"
+          },
+          {
+            "label": "Agendar retorno para depois",
+            "next": "agendar_retorno"
+          },
+          {
+            "label": "Encerrar sem contato",
+            "next": "END:SEM_CONTATO"
+          }
+        ]
+      },
+      {
+        "id": "agendar_retorno",
+        "type": "input",
+        "key": "agendar_retorno_quando",
+        "text": "Informe data/hora ou janela para novo contato",
+        "placeholder": "Ex.: hoje às 14:30 / amanhã 09:00–10:00",
+        "next": "END:AGENDADO_RETORNO"
+      },
+      {
+        "id": "ci_chamado",
+        "type": "input",
+        "key": "ci_chamado_aberto",
+        "text": "Existe chamado aberto? Informe o número/ID (ou 'não')",
+        "placeholder": "Ex.: INC123456 / não",
+        "next": "ci_endereco"
+      },
+      {
+        "id": "ci_endereco",
+        "type": "input",
+        "key": "ci_endereco_contrato",
+        "text": "Validar endereço/contrato do circuito",
+        "placeholder": "Endereço/ID do contrato/circuito",
+        "next": "ci_dados_cliente"
+      },
+      {
+        "id": "ci_dados_cliente",
+        "type": "input",
+        "key": "ci_dados_cliente",
+        "text": "Validar dados do cliente (nome/unidade/identificação)",
+        "placeholder": "Nome/Unidade/ID",
+        "next": "ci_telefone"
+      },
+      {
+        "id": "ci_telefone",
+        "type": "input",
+        "key": "ci_telefone_retorno",
+        "text": "Validar telefone de retorno",
+        "placeholder": "DDD + número",
+        "next": "ci_no_local"
+      },
+      {
+        "id": "ci_no_local",
+        "type": "yesno",
+        "text": "Cliente está no local para testes?",
+        "yes": "ci_disponibilidade",
+        "no": "ci_disponibilidade"
+      },
+      {
+        "id": "ci_disponibilidade",
+        "type": "input",
+        "key": "ci_disponibilidade_testes",
+        "text": "Disponibilidade para testes (agora/horário)",
+        "placeholder": "Ex.: agora / hoje 18h / amanhã 9–10h",
+        "next": "ci_reset"
+      },
+      {
+        "id": "ci_reset",
+        "type": "yesno",
+        "text": "Já foi realizado reset/religue dos equipamentos?",
+        "yes": "ci_detalhes",
+        "no": "ci_detalhes"
+      },
+      {
+        "id": "ci_detalhes",
+        "type": "input",
+        "key": "ci_detalhes_reclamacao",
+        "text": "Entender detalhes da reclamação",
+        "placeholder": "O que não funciona? Desde quando? Impacto?",
+        "next": "ci_evidencias"
+      },
+      {
+        "id": "ci_evidencias",
+        "type": "input",
+        "key": "ci_evidencias_iniciais",
+        "text": "Coletar evidências iniciais",
+        "placeholder": "Prints, horários, origem/destino, protocolos, etc.",
+        "next": "classificar_reclamacao"
+      },
+      {
+        "id": "classificar_reclamacao",
+        "type": "choice",
+        "text": "Qual é a reclamação?",
+        "options": [
+          {
+            "label": "Interrompido",
+            "next": "sel_segmento_interrompido"
+          },
+          {
+            "label": "Degradação",
+            "next": "sel_segmento_degradacao"
+          },
+          {
+            "label": "Falha de Acesso Específico (IP Dedicado / VPN)",
+            "next": "fe_q1"
+          }
+        ]
+      },
+      {
+        "id": "sel_segmento_interrompido",
+        "type": "choice",
+        "text": "Interrompido — qual o segmento?",
+        "options": [
+          {
+            "label": "GPON",
+            "next": "gpon_int_start"
+          },
+          {
+            "label": "SWT",
+            "next": "swt_int_start"
+          }
+        ]
+      },
+      {
+        "id": "sel_segmento_degradacao",
+        "type": "choice",
+        "text": "Degradação — qual o segmento?",
+        "options": [
+          {
+            "label": "GPON",
+            "next": "gpon_deg_start"
+          },
+          {
+            "label": "SWT",
+            "next": "swt_deg_start"
+          }
+        ]
+      },
+      {
+        "id": "fe_q1",
+        "type": "choice",
+        "text": "Falha de Acesso Específico — Qual a reclamação?",
+        "options": [
+          {
+            "label": "Não acessa site específico",
+            "next": "fe_ipd_checklist"
+          },
+          {
+            "label": "Não comunica com servidor específico",
+            "next": "fe_ipd_checklist"
+          },
+          {
+            "label": "Porta bloqueada",
+            "next": "fe_ipd_checklist"
+          },
+          {
+            "label": "Falha em aplicação",
+            "next": "fe_ipd_checklist"
+          },
+          {
+            "label": "Não fecha VPN",
+            "next": "fe_vpn_sub"
+          }
+        ]
+      },
+      {
+        "id": "fe_vpn_sub",
+        "type": "choice",
+        "text": "Falha Específica VPN — Qual a reclamação?",
+        "options": [
+          {
+            "label": "Não comunica com matriz",
+            "next": "fe_ipd_checklist"
+          },
+          {
+            "label": "Não comunica com outra unidade",
+            "next": "fe_ipd_checklist"
+          },
+          {
+            "label": "Não acessa aplicação / IP específico via VPN",
+            "next": "fe_ipd_checklist"
+          }
+        ]
+      },
+      {
+        "id": "fe_ipd_checklist",
+        "type": "message",
+        "text": "Coleta de informações conforme Checklist da Falha Específica (foco no destino/porta/protocolo).",
+        "next": "fe_destino"
+      },
+      {
+        "id": "fe_destino",
+        "type": "input",
+        "key": "fe_destino_especifico",
+        "text": "Qual o site/servidor/aplicação/IP/porta afetada?",
+        "placeholder": "URL/IP/Porta/Aplicação",
+        "next": "fe_operadora"
+      },
+      {
+        "id": "fe_operadora",
+        "type": "input",
+        "key": "fe_operadora_destino",
+        "text": "Se IP externo: informe operadora/ASN do destino (se conhecido)",
+        "placeholder": "Ex.: ASNXXXX / Operadora Y",
+        "next": "fe_reproducao"
+      },
+      {
+        "id": "fe_reproducao",
+        "type": "yesno",
+        "text": "Falha reproduzida localmente no CPE/ONT/SWT?",
+        "yes": "fe_evidencias",
+        "no": "fe_evidencias"
+      },
+      {
+        "id": "fe_evidencias",
+        "type": "input",
+        "key": "fe_evidencias",
+        "text": "Evidências (ping/traceroute, horários, origem/destino, prints, logs)",
+        "placeholder": "Detalhe todas as evidências",
+        "next": "fe_envio_diag"
+      },
+      {
+        "id": "fe_envio_diag",
+        "type": "message",
+        "text": "Coleta concluída. Envie BD ao Diagnóstico.",
+        "next": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gpon_int_start",
+        "type": "message",
+        "text": "Interrompido – GPON: início do diagnóstico.",
+        "next": "g3"
+      },
+      {
+        "id": "g3",
+        "type": "yesno",
+        "text": "Teste Ping/ARP para o CPE/ONT (WAN) está OK?",
+        "yes": "g_acesso_cpe",
+        "no": "g4_olt"
+      },
+      {
+        "id": "g4_olt",
+        "type": "yesno",
+        "text": "Sem ping para o CPE. Acesso à OLT está OK?",
+        "yes": "g5_sincronismo",
+        "no": "g_massiva"
+      },
+      {
+        "id": "g_massiva",
+        "type": "yesno",
+        "text": "Há Manutenção (TAP) ou Massiva na região?",
+        "yes": "END:PRE_MASSIVA",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g5_sincronismo",
+        "type": "yesno",
+        "text": "Sincronismo da fibra está OK?",
+        "yes": "g6_lan",
+        "no": "g5_pon"
+      },
+      {
+        "id": "g5_pon",
+        "type": "yesno",
+        "text": "Porta PON está UP?",
+        "yes": "END:CAMPO",
+        "no": "g_massiva"
+      },
+      {
+        "id": "g_acesso_cpe",
+        "type": "yesno",
+        "text": "Acesso ao CPE/ONT está OK (sem locks, responde gerência)?",
+        "yes": "g_verif_lan_arp_cli",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g_verif_lan_arp_cli",
+        "type": "yesno",
+        "text": "Verificação de LAN/ARP do cliente: tabela/ARP e link local OK?",
+        "yes": "g_rede_cliente_ok",
+        "no": "g_contatar_cliente_interno"
+      },
+      {
+        "id": "g_contatar_cliente_interno",
+        "type": "message",
+        "text": "Possível falha na rede interna do cliente. Contatar cliente e orientar verificações locais.",
+        "next": "g_cliente_aceitou"
+      },
+      {
+        "id": "g_cliente_aceitou",
+        "type": "yesno",
+        "text": "Cliente aceitou realizar verificações na rede interna?",
+        "yes": "g_testes_dedicado",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g_rede_cliente_ok",
+        "type": "yesno",
+        "text": "Rede do cliente aparenta OK. Prosseguir com testes no destino (IP dedicado, VPN, outra ponta)?",
+        "yes": "g_testes_dedicado",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g_testes_dedicado",
+        "type": "yesno",
+        "text": "Realizados testes (ping interno, VPN, ping na outra ponta). Normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g6_lan",
+        "type": "yesno",
+        "text": "LAN da ONT está OK?",
+        "yes": "g7_sinal",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g7_sinal",
+        "type": "input",
+        "key": "sinal_dbm",
+        "text": "Nível de sinal medido (dBm)",
+        "placeholder": "Ex.: -20.5",
+        "next": "g8_sinal_check"
+      },
+      {
+        "id": "g8_sinal_check",
+        "type": "yesno",
+        "text": "Sinal dentro do padrão (>-27 dBm)?",
+        "yes": "g9_metro",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "g9_metro",
+        "type": "yesno",
+        "text": "Rede Metro (Túnel) OK?",
+        "yes": "END:DIAGNOSTICO",
+        "no": "END:PRE_MASTER"
+      },
+      {
+        "id": "swt_int_start",
+        "type": "message",
+        "text": "Interrompido – SWT: início do diagnóstico.",
+        "next": "s1_ping"
+      },
+      {
+        "id": "s1_ping",
+        "type": "yesno",
+        "text": "Conectividade ao CPE/SWT (Ping/ARP) está OK?",
+        "yes": "s2_vlan",
+        "no": "s_massiva"
+      },
+      {
+        "id": "s_massiva",
+        "type": "yesno",
+        "text": "Há Manutenção/Massiva na região?",
+        "yes": "END:PRE_MASSIVA",
+        "no": "s_acesso_swt"
+      },
+      {
+        "id": "s_acesso_swt",
+        "type": "yesno",
+        "text": "Acesso gerencial ao SWT está OK?",
+        "yes": "s2_vlan",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "s2_vlan",
+        "type": "yesno",
+        "text": "VLAN/Porta do cliente no SWT está UP/forwarding?",
+        "yes": "s3_uplink",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "s3_uplink",
+        "type": "yesno",
+        "text": "Uplink do SWT está UP?",
+        "yes": "s4_lan",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "s4_lan",
+        "type": "yesno",
+        "text": "LAN/porta do cliente no SWT com tráfego?",
+        "yes": "s5_testes",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "s5_testes",
+        "type": "yesno",
+        "text": "Após ajustes/testes, normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gpon_deg_start",
+        "type": "message",
+        "text": "Degradação – GPON: início do diagnóstico.",
+        "next": "gd1_escopo"
+      },
+      {
+        "id": "gd1_escopo",
+        "type": "choice",
+        "text": "Escopo da degradação",
+        "options": [
+          {
+            "label": "Geral (todo tráfego)",
+            "next": "gd2_sinal"
+          },
+          {
+            "label": "Específica (destino/protocolo)",
+            "next": "gd5_destino"
+          }
+        ]
+      },
+      {
+        "id": "gd2_sinal",
+        "type": "input",
+        "key": "gpon_deg_sinal",
+        "text": "Informe o sinal (dBm) atual da ONT",
+        "placeholder": "Ex.: -23.0",
+        "next": "gd3_sinal_ok"
+      },
+      {
+        "id": "gd3_sinal_ok",
+        "type": "yesno",
+        "text": "Sinal dentro do padrão (>-27 dBm)?",
+        "yes": "gd4_lan",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "gd4_lan",
+        "type": "yesno",
+        "text": "LAN da ONT OK (sem erros/CRC, sem flaps)?",
+        "yes": "gd6_teste_banda",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gd6_teste_banda",
+        "type": "yesno",
+        "text": "Após ajustes, testes de banda/latência normalizaram?",
+        "yes": "END:NORMALIZADO",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gd5_destino",
+        "type": "input",
+        "key": "gpon_deg_dest",
+        "text": "Qual o destino/protocolo afetado?",
+        "placeholder": "URL/IP/Porta/Protocolo",
+        "next": "gd7_metro"
+      },
+      {
+        "id": "gd7_metro",
+        "type": "yesno",
+        "text": "Rede Metro/Túnel está OK?",
+        "yes": "gd8_diag",
+        "no": "END:PRE_MASTER"
+      },
+      {
+        "id": "gd8_diag",
+        "type": "message",
+        "text": "Coletar evidências (ping/traceroute/horários)",
+        "next": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "swt_deg_start",
+        "type": "message",
+        "text": "Degradação – SWT: início do diagnóstico.",
+        "next": "sd1_scope"
+      },
+      {
+        "id": "sd1_scope",
+        "type": "choice",
+        "text": "Escopo da degradação",
+        "options": [
+          {
+            "label": "Geral (todo tráfego)",
+            "next": "sd2_cpu_mem"
+          },
+          {
+            "label": "Específica (destino/protocolo)",
+            "next": "sd5_destino"
+          }
+        ]
+      },
+      {
+        "id": "sd2_cpu_mem",
+        "type": "yesno",
+        "text": "SWT sem saturação (CPU/memória/erros) e sem flaps?",
+        "yes": "sd3_queue",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "sd3_queue",
+        "type": "yesno",
+        "text": "Queues/policers dentro do esperado?",
+        "yes": "sd4_teste",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "sd4_teste",
+        "type": "yesno",
+        "text": "Após ajustes/testes, normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "sd5_destino",
+        "type": "input",
+        "key": "swt_deg_dest",
+        "text": "Qual destino/protocolo afetado?",
+        "placeholder": "URL/IP/Porta/Protocolo",
+        "next": "sd6_metro"
+      },
+      {
+        "id": "sd6_metro",
+        "type": "yesno",
+        "text": "Rede Metro/Túnel está OK?",
+        "yes": "sd7_diag",
+        "no": "END:PRE_MASTER"
+      },
+      {
+        "id": "sd7_diag",
+        "type": "message",
+        "text": "Coletar evidências (ping/traceroute/horários)",
+        "next": "END:DIAGNOSTICO"
+      }
+    ]
+  }
+}

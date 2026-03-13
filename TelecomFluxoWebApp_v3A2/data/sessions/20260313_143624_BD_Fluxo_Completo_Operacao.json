@@ -1,0 +1,172 @@
+{
+  "flow": "Fluxo_Completo_Operacao",
+  "bd": "BD",
+  "vars": {
+    "0": "E",
+    "1": "N",
+    "2": "D",
+    "3": ":",
+    "4": "C",
+    "5": "A",
+    "6": "M",
+    "7": "P",
+    "8": "O",
+    "9": "e",
+    "10": "s",
+    "11": "i",
+    "12": "l",
+    "13": "i",
+    "14": "d",
+    "15": "a",
+    "16": "d",
+    "17": "e",
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "",
+    "ci_chamado_aberto": "123",
+    "ci_endereco_contrato": "",
+    "ci_dados_cliente": "",
+    "ci_telefone_retorno": "",
+    "ci_disponibilidade_testes": "",
+    "ci_detalhes_reclamacao": "",
+    "ci_evidencias_iniciais": "",
+    "Qual é a reclamação?": "Interrompido",
+    "Interrompido — qual o segmento?": "SWT",
+    "testes_realizados": "Ping, ARP, Interface",
+    "sinal_dbm": ""
+  },
+  "trail": [
+    {
+      "id": "checklist_intro",
+      "text": "CHECKLIST INICIAL – Contato com o cliente. Antes de classificar a falha, valide as informações abaixo.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "contato_cliente",
+      "text": "Conseguiu contato com o cliente?",
+      "action": "yes",
+      "set": "ci_chamado"
+    },
+    {
+      "id": "ci_chamado",
+      "text": "Existe chamado aberto? Informe o número/ID (ou 'não')",
+      "action": "input",
+      "set": {
+        "ci_chamado_aberto": "123"
+      }
+    },
+    {
+      "id": "ci_endereco",
+      "text": "Validar endereço/contrato do circuito",
+      "action": "input",
+      "set": {
+        "ci_endereco_contrato": ""
+      }
+    },
+    {
+      "id": "ci_dados_cliente",
+      "text": "Validar dados do cliente (nome/unidade/identificação)",
+      "action": "input",
+      "set": {
+        "ci_dados_cliente": ""
+      }
+    },
+    {
+      "id": "ci_telefone",
+      "text": "Validar telefone de retorno",
+      "action": "input",
+      "set": {
+        "ci_telefone_retorno": ""
+      }
+    },
+    {
+      "id": "ci_no_local",
+      "text": "Cliente está no local para testes?",
+      "action": "yes",
+      "set": "ci_disponibilidade"
+    },
+    {
+      "id": "ci_disponibilidade",
+      "text": "Disponibilidade para testes (agora/horário)",
+      "action": "input",
+      "set": {
+        "ci_disponibilidade_testes": ""
+      }
+    },
+    {
+      "id": "ci_reset",
+      "text": "Já foi realizado reset/religue dos equipamentos?",
+      "action": "yes",
+      "set": "ci_detalhes"
+    },
+    {
+      "id": "ci_detalhes",
+      "text": "Entender detalhes da reclamação",
+      "action": "input",
+      "set": {
+        "ci_detalhes_reclamacao": ""
+      }
+    },
+    {
+      "id": "ci_evidencias",
+      "text": "Coletar evidências iniciais",
+      "action": "input",
+      "set": {
+        "ci_evidencias_iniciais": ""
+      }
+    },
+    {
+      "id": "classificar_reclamacao",
+      "text": "Qual é a reclamação?",
+      "action": "select",
+      "set": {
+        "Qual é a reclamação?": "Interrompido"
+      }
+    },
+    {
+      "id": "sel_segmento_interrompido",
+      "text": "Interrompido — qual o segmento?",
+      "action": "select",
+      "set": {
+        "Interrompido — qual o segmento?": "SWT"
+      }
+    },
+    {
+      "id": "swt_int_start",
+      "text": "Interrompido – SWT: início do diagnóstico.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "s1_ping",
+      "text": "Conectividade ao CPE/SWT (Ping/ARP) está OK?",
+      "action": "yes",
+      "set": "s2_vlan"
+    },
+    {
+      "id": "s2_vlan",
+      "text": "VLAN/Porta do cliente no SWT está UP/forwarding?",
+      "action": "no",
+      "set": "END:CAMPO"
+    },
+    {
+      "id": "s2_vlan",
+      "text": "VLAN/Porta do cliente no SWT está UP/forwarding?",
+      "action": "yes",
+      "set": "s3_uplink"
+    },
+    {
+      "id": "s3_uplink",
+      "text": "Uplink do SWT está UP?",
+      "action": "no",
+      "set": "END:CAMPO"
+    },
+    {
+      "id": "s3_uplink",
+      "text": "Uplink do SWT está UP?",
+      "action": "no",
+      "set": "END:CAMPO"
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO PARA CAMPO (FIELD)\nCliente: undefined\nServiço: undefined\nBD: undefined\n\nMotivo: \nTestes Realizados: Ping, ARP, Interface\n\nEncaminhamento: GTD / Parceiro\nResponsável: undefined\nData: 13/03/2026, 14:36:24"
+}

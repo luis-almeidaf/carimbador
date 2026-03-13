@@ -1,0 +1,59 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "reclamacao",
+    "Evidências iniciais (logs/prints/horários)": "evidencia",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "Perda de ping (%)": "12",
+    "evidencias_massiva": "log",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4",
+      "text": "Perda de ping (%)",
+      "action": "input",
+      "set": {
+        "Perda de ping (%)": "12"
+      }
+    },
+    {
+      "id": "g5",
+      "text": "Consta massiva para a região?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g5a",
+      "text": "Evidências massiva",
+      "action": "note",
+      "set": {
+        "evidencias_massiva": "log"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – PRÉ-MASSIVA\nCliente: <NOME>\nServiço: <TIPO>\nBD: <NUMERO>\n\nIndicador: Possível falha coletiva\nEvidências: log\n\nEncaminhamento: Pré-Massiva\nResponsável: undefined\nData: 11/03/2026, 14:12:38"
+}

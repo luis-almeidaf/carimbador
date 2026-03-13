@@ -1,0 +1,82 @@
+INTERROMPIDO
+
+Validar se houve checagem dos equipamentos VIVO:
+		- Modem/SWT estão ligados?
+		SIM ( )    NÃO ()
+
+		- LEDS acessos?
+		SIM ( )    NÃO ()
+
+		- Todos os cabos estão conectados?
+		SIM ( )    NÃO ()
+
+		- Realizado Reset dos equipamentos?
+		SIM ( )    NÃO ()
+
+		- Validar se normalizou após reset / Religue dos equipamentos.
+
+__________________________________________________________________________________________________________
+DEGRADAÇÂO (QUEDAS/PERDA DE PACOTES/LATENCIA/BANDA):
+
+Quedas, perda de pacotes, latência
+- Cliente visualiza perdas/quedas/Latêcia através de uma ferramenta de monitoramento? Ou através de teste de ping estendido? 
+
+        - FERRAMENTA ()   PING ()
+
+- Quedas para o link todo ou para destino específico?
+
+TODO LINK ()   DESTINO ESPECÍFICO  () QUAL ___CAIXA_DE_TEXTO___
+
+
+- Qual porcentagem de perdas/Latência?
+
+___CAIXA_DE_TEXTO___
+
+- Cliente monitora/pinga de dentro do link para fora (Solicitar quais destino Monitora) ou de fora para o link? (Solicitar qual origem).
+
+___CAIXA_DE_TEXTO___
+
+- Quando percebeu a falha?
+___CAIXA_DE_TEXTO___
+
+
+__________________________________________________________________________________________________________
+
+Banda
+- Falha de banda ocorre para download, upload ou ambos?
+
+UPLOAD ()   DOWNLOAD ()
+
+- Quanto está atingindo?
+___CAIXA_DE_TEXTO___
+
+- Como está testando? Sites medidores? Testou em sites diferentes? Servidor de teste é da região? Ou está testando transferindo arquivos? 
+___CAIXA_DE_TEXTO___
+
+- Está testando isolando rede interna? Ou com circuito em produção. 
+___CAIXA_DE_TEXTO___
+
+- Quando percebeu a limitação da banda? Desde a contratação? Após algum upgrade? Após alguma outra falha da Vivo? Após alguma intervenção interna por parte do cliente?
+___CAIXA_DE_TEXTO___
+
+__________________________________________________________________________________________________________
+FALHA ESPECÍFICA
+
+- Não acessa Aplicação / IP Específico
+___CAIXA_DE_TEXTO___
+- Qual site ou aplicação (questionar porta utilizada e IP do servidor da aplicação) não está acessando?
+___CAIXA_DE_TEXTO___
+- Se cliente possuir outro link, acessa a partir de outra operadora?
+___CAIXA_DE_TEXTO___
+- Falha está ativa no momento?
+SIM ()    NÃO ()
+
+- Quando percebeu a falha?
+___CAIXA_DE_TEXTO___
+
+
+- Reproduzir falha reportada pelo cliente no CPE.
+	- Não acessa IP especifico, realizar teste de ping para IP mencionado.
+	
+
+

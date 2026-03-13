@@ -1,0 +1,103 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD-2026-000123",
+  "customer": {
+    "chamado": {
+      "bd": "BD-2026-000123",
+      "motivo": "Sem navegação desde 08:10"
+    },
+    "cliente": "ACME Indústria S.A.",
+    "cnpj": "12.345.678/0001-90",
+    "contato": {
+      "email": "joao.silva@acme.com",
+      "nome": "João da Silva",
+      "telefone": "(41) 98888-0000"
+    },
+    "endereco": {
+      "instalacao": "Rua das Flores, 123 - Curitiba/PR"
+    },
+    "historico": {
+      "observacoes": "Cliente prioriza horário comercial",
+      "ultima_intervencao": "2026-03-01"
+    },
+    "servico": {
+      "circuito": "BR123456",
+      "tipo": "IP Dedicado 200 Mbps",
+      "velocidade": "200 Mbps"
+    }
+  },
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "1",
+    "Evidências iniciais (logs/prints/horários)": "1",
+    "Segmento": "GPON",
+    "Status da interface": "DOWN",
+    "Perda de ping (%)": "80",
+    "evidencias_massiva": "log 1",
+    "testes_realizados": "Ping, ARP, Interface",
+    "Nível de sinal (dBm)": "20",
+    "motivo_campo": "Sinal óptico abaixo do mínimo",
+    "conclusao_tecnica": "teste 1\n"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "DOWN"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4",
+      "text": "Perda de ping (%)",
+      "action": "input",
+      "set": {
+        "Perda de ping (%)": "80"
+      }
+    },
+    {
+      "id": "g5",
+      "text": "Consta massiva para a região?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g6",
+      "text": "Nível de sinal (dBm)",
+      "action": "input",
+      "set": {
+        "Nível de sinal (dBm)": "20"
+      }
+    },
+    {
+      "id": "g7",
+      "text": "Sinal abaixo do mínimo? (<= -27 dBm)",
+      "action": "yes",
+      "set": {
+        "motivo_campo": "Sinal óptico abaixo do mínimo"
+      }
+    },
+    {
+      "id": "g7a",
+      "text": "Conclusão técnica",
+      "action": "note",
+      "set": {
+        "conclusao_tecnica": "teste 1\n"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO PARA CAMPO (FIELD)\nCliente: ACME Indústria S.A.\nServiço: IP Dedicado 200 Mbps\nBD: BD-2026-000123\n\nMotivo: Sinal óptico abaixo do mínimo\nTestes Realizados: Ping, ARP, Interface\n\nEncaminhamento: GTD / Parceiro\nResponsável: Lucas W. W. Benedito\nData: 10/03/2026, 14:49:43"
+}

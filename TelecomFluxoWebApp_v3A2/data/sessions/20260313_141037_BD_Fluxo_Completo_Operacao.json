@@ -1,0 +1,172 @@
+{
+  "flow": "Fluxo_Completo_Operacao",
+  "bd": "BD",
+  "vars": {
+    "0": "E",
+    "1": "N",
+    "2": "D",
+    "3": ":",
+    "4": "N",
+    "5": "O",
+    "6": "R",
+    "7": "M",
+    "8": "A",
+    "9": "L",
+    "10": "I",
+    "11": "Z",
+    "12": "A",
+    "13": "D",
+    "14": "O",
+    "15": "d",
+    "16": "o",
+    "17": "l",
+    "18": "i",
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "",
+    "ci_chamado_aberto": "12345",
+    "ci_endereco_contrato": "endereco teste",
+    "ci_dados_cliente": "nome teste",
+    "ci_telefone_retorno": "123456",
+    "ci_disponibilidade_testes": "agora",
+    "ci_detalhes_reclamacao": "sem conectivadade",
+    "ci_evidencias_iniciais": "",
+    "Qual é a reclamação?": "Interrompido",
+    "Interrompido — qual o segmento?": "GPON",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "checklist_intro",
+      "text": "CHECKLIST INICIAL – Contato com o cliente. Antes de classificar a falha, valide as informações abaixo.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "contato_cliente",
+      "text": "Conseguiu contato com o cliente?",
+      "action": "yes",
+      "set": "ci_chamado"
+    },
+    {
+      "id": "ci_chamado",
+      "text": "Existe chamado aberto? Informe o número/ID (ou 'não')",
+      "action": "input",
+      "set": {
+        "ci_chamado_aberto": "12345"
+      }
+    },
+    {
+      "id": "ci_endereco",
+      "text": "Validar endereço/contrato do circuito",
+      "action": "input",
+      "set": {
+        "ci_endereco_contrato": "endereco teste"
+      }
+    },
+    {
+      "id": "ci_dados_cliente",
+      "text": "Validar dados do cliente (nome/unidade/identificação)",
+      "action": "input",
+      "set": {
+        "ci_dados_cliente": "nome teste"
+      }
+    },
+    {
+      "id": "ci_telefone",
+      "text": "Validar telefone de retorno",
+      "action": "input",
+      "set": {
+        "ci_telefone_retorno": "123456"
+      }
+    },
+    {
+      "id": "ci_no_local",
+      "text": "Cliente está no local para testes?",
+      "action": "yes",
+      "set": "ci_disponibilidade"
+    },
+    {
+      "id": "ci_disponibilidade",
+      "text": "Disponibilidade para testes (agora/horário)",
+      "action": "input",
+      "set": {
+        "ci_disponibilidade_testes": "agora"
+      }
+    },
+    {
+      "id": "ci_reset",
+      "text": "Já foi realizado reset/religue dos equipamentos?",
+      "action": "yes",
+      "set": "ci_detalhes"
+    },
+    {
+      "id": "ci_detalhes",
+      "text": "Entender detalhes da reclamação",
+      "action": "input",
+      "set": {
+        "ci_detalhes_reclamacao": "sem conectivadade"
+      }
+    },
+    {
+      "id": "ci_evidencias",
+      "text": "Coletar evidências iniciais",
+      "action": "input",
+      "set": {
+        "ci_evidencias_iniciais": ""
+      }
+    },
+    {
+      "id": "classificar_reclamacao",
+      "text": "Qual é a reclamação?",
+      "action": "select",
+      "set": {
+        "Qual é a reclamação?": "Interrompido"
+      }
+    },
+    {
+      "id": "sel_segmento_interrompido",
+      "text": "Interrompido — qual o segmento?",
+      "action": "select",
+      "set": {
+        "Interrompido — qual o segmento?": "GPON"
+      }
+    },
+    {
+      "id": "gpon_int_start",
+      "text": "Interrompido – GPON: início do diagnóstico.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g3",
+      "text": "Teste Ping/ARP para o CPE/ONT (WAN) está OK?",
+      "action": "yes",
+      "set": "g_acesso_cpe"
+    },
+    {
+      "id": "g_acesso_cpe",
+      "text": "Acesso ao CPE/ONT está OK (sem locks, responde gerência)?",
+      "action": "yes",
+      "set": "g_verif_lan_arp_cli"
+    },
+    {
+      "id": "g_verif_lan_arp_cli",
+      "text": "Verificação de LAN/ARP do cliente: tabela/ARP e link local OK?",
+      "action": "yes",
+      "set": "g_rede_cliente_ok"
+    },
+    {
+      "id": "g_rede_cliente_ok",
+      "text": "Rede do cliente aparenta OK. Prosseguir com testes no destino (IP dedicado, VPN, outra ponta)?",
+      "action": "yes",
+      "set": "g_testes_dedicado"
+    },
+    {
+      "id": "g_testes_dedicado",
+      "text": "Realizados testes (ping interno, VPN, ping na outra ponta). Normalizou?",
+      "action": "yes",
+      "set": "END:NORMALIZADO"
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – NORMALIZADO COM CLIENTE\nCliente: undefined\nServiço: undefined\nBD: undefined\n\nStatus Final: NORMALIZADO\nAção Técnica: \nTestes Executados: Ping, ARP, Interface\nValidação: Cliente confirmou pleno funcionamento\n\nResponsável: undefined\nData: 13/03/2026, 14:10:37"
+}

@@ -1,0 +1,40 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "reclamacao teste",
+    "Evidências iniciais (logs/prints/horários)": "evidencia teste",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "acao_tecnica": "Checklist + validações de conectividade",
+    "ping_loss": "0",
+    "testes_realizados": "Ping perda 0%"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "yes",
+      "set": {
+        "acao_tecnica": "Checklist + validações de conectividade",
+        "ping_loss": "0"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – NORMALIZADO COM CLIENTE\nCliente: SERVICO SOCIAL DA INDUSTRIA - SESI\nServiço: <TIPO>\nBD: <NUMERO>\n\nStatus Final: NORMALIZADO\nAção Técnica: Checklist + validações de conectividade\nTestes Executados: Ping perda 0%\nValidação: Cliente confirmou pleno funcionamento\n\nResponsável: Luane Carolina Petla de Queiroz \nData: 11/03/2026, 11:12:43"
+}

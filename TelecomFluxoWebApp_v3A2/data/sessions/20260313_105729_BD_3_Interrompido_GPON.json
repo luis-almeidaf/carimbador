@@ -1,0 +1,112 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "Perda de ping (%) após checklist": "100",
+    "Nível de sinal medido (dBm)": "-25",
+    "motivo_campo": "Sinal óptico abaixo do mínimo",
+    "conclusao_tecnica": "conclusao teste",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "chk_contato",
+      "text": "Foi possível contato com o cliente para validação física?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v1_energia",
+      "text": "CHECKLIST: Equipamentos VIVO (Modem/SWT) estão ligados?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v2_leds",
+      "text": "CHECKLIST: Os LEDs dos equipamentos estão acesos?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v3_cabos",
+      "text": "CHECKLIST: Todos os cabos estão conectados firmemente?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v4_reset",
+      "text": "CHECKLIST: Realizado Reset/Religue dos equipamentos?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v5_normalizou",
+      "text": "O serviço normalizou após estas ações físicas?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4",
+      "text": "Perda de ping (%) após checklist",
+      "action": "input",
+      "set": {
+        "Perda de ping (%) após checklist": "100"
+      }
+    },
+    {
+      "id": "g5",
+      "text": "Consta massiva para a região?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g6",
+      "text": "Nível de sinal medido (dBm)",
+      "action": "input",
+      "set": {
+        "Nível de sinal medido (dBm)": "-25"
+      }
+    },
+    {
+      "id": "g7",
+      "text": "Sinal abaixo do mínimo? (<= -27 dBm)",
+      "action": "yes",
+      "set": {
+        "motivo_campo": "Sinal óptico abaixo do mínimo"
+      }
+    },
+    {
+      "id": "g7a",
+      "text": "Conclusão técnica para campo",
+      "action": "note",
+      "set": {
+        "conclusao_tecnica": "conclusao teste"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO PARA CAMPO (FIELD)\nCliente: BB HOTELS BRASIL HOTELARIA E INVESTIMENTOS LTDA\nServiço: IP DEDICADO / IP DEDICADO\nBD: 6604727\n\nMotivo: Sinal óptico abaixo do mínimo\nTestes Realizados: Ping, ARP, Interface\n\nEncaminhamento: GTD / Parceiro\nResponsável: GIOVANI DA SILVA BRAGA\nData: 13/03/2026, 10:57:29"
+}

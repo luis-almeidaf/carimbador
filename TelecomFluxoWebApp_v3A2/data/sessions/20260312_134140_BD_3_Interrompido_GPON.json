@@ -1,0 +1,40 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "1",
+    "Evidências iniciais (logs/prints/horários)": "1",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "acao_tecnica": "Checklist + validações de conectividade",
+    "ping_loss": "0",
+    "testes_realizados": "Ping perda 0%"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "yes",
+      "set": {
+        "acao_tecnica": "Checklist + validações de conectividade",
+        "ping_loss": "0"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – NORMALIZADO COM CLIENTE\nCliente: ITALUX LUBRIFICANTES E ACUMULADORES LTDA\nServiço: IP DEDICADO\nBD: 6604766\n\nStatus Final: NORMALIZADO\nAção Técnica: Checklist + validações de conectividade\nTestes Executados: Ping perda 0%\nValidação: Cliente confirmou pleno funcionamento\n\nResponsável: JOEL VELOSO DOS SANTOS JUNIOR\nData: 12/03/2026, 13:41:40"
+}

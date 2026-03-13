@@ -1,0 +1,59 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "reclamação x",
+    "Evidências iniciais (logs/prints/horários)": "evidencia",
+    "Segmento": "GPON",
+    "Status da interface": "ERROS",
+    "Perda de ping (%)": "80",
+    "evidencias_massiva": "Log massiva",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "ERROS"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4",
+      "text": "Perda de ping (%)",
+      "action": "input",
+      "set": {
+        "Perda de ping (%)": "80"
+      }
+    },
+    {
+      "id": "g5",
+      "text": "Consta massiva para a região?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g5a",
+      "text": "Evidências massiva",
+      "action": "note",
+      "set": {
+        "evidencias_massiva": "Log massiva"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – PRÉ-MASSIVA\nCliente: ITALUX LUBRIFICANTES E ACUMULADORES LTDA\nServiço: <TIPO>\nBD: 6604766\n\nIndicador: Possível falha coletiva\nEvidências: Log massiva\n\nEncaminhamento: Pré-Massiva\nResponsável: JOEL VELOSO DOS SANTOS JUNIOR\nData: 12/03/2026, 11:07:06"
+}

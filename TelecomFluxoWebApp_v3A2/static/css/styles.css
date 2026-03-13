@@ -1,0 +1,144 @@
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #60a5fa;
+  --danger: #ef4444;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Noto Sans,
+    Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #1f2937;
+}
+h1 {
+  margin: 0 0 4px 0;
+  font-size: 22px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  padding: 24px;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 16px;
+}
+.panel h2 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+}
+.card {
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 12px;
+  background: #0b1220;
+  margin-bottom: 10px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}
+.btn {
+  background: var(--accent);
+  color: #081019;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: #1f2937;
+  color: var(--muted);
+  margin-left: 6px;
+}
+.carimbo {
+  white-space: pre-wrap;
+  background: #0b1220;
+  border: 1px dashed #374151;
+  padding: 12px;
+  border-radius: 8px;
+  min-height: 140px;
+}
+input,
+select,
+textarea {
+  width: 100%;
+  background: #0b1220;
+  color: var(--text);
+  border: 1px solid #374151;
+  border-radius: 6px;
+  padding: 8px;
+}
+label {
+  display: block;
+  margin: 8px 0 4px;
+}
+#vars table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#vars th,
+#vars td {
+  border: 1px solid #374151;
+  padding: 6px;
+  font-size: 13px;
+}
+#vars th {
+  background: #0b1220;
+  text-align: left;
+}
+#bdInput,
+#bdInputBtn {
+  margin-bottom: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+th {
+  color: white;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 2px solid #dcdcdc;
+}
+
+td {
+  padding: 8px;
+  font-size: 13px;
+}
+

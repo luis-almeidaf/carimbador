@@ -1,0 +1,34 @@
+{
+  "flow": "4_Interrompido_SWT",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "teste",
+    "Segmento": "SWT",
+    "Status da interface": "UP",
+    "testes_realizados": "Ping, ARP, Interface",
+    "Porta CPE": "UP",
+    "acao_tecnica": "Ajustes/clear counters/reconfig porta",
+    "ping_loss": "0"
+  },
+  "trail": [
+    {
+      "id": "s1",
+      "text": "Porta CPE",
+      "action": "select",
+      "set": {
+        "Porta CPE": "UP"
+      }
+    },
+    {
+      "id": "s2",
+      "text": "Ping WAN CPE OK?",
+      "action": "yes",
+      "set": {
+        "acao_tecnica": "Ajustes/clear counters/reconfig porta",
+        "ping_loss": "0"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – NORMALIZADO COM CLIENTE\nCliente: COMPANHIA DE SANEAMENTO BASICO DO ESTADO DE SAO PAULO - SABESP\nServiço: IP MULTI SERVIÇO / INTRAGOV N\nBD: 6604043\n\nStatus Final: NORMALIZADO\nAção Técnica: Ajustes/clear counters/reconfig porta\nTestes Executados: Ping, ARP, Interface\nValidação: Cliente confirmou pleno funcionamento\n\nResponsável: EVELYN ANTUNES ROSA DOS SANTOS\nData: 13/03/2026, 10:55:53"
+}

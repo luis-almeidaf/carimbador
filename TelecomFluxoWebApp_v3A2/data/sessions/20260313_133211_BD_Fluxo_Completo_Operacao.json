@@ -1,0 +1,48 @@
+{
+  "flow": "Fluxo_Completo_Operacao",
+  "bd": "BD",
+  "vars": {
+    "0": "E",
+    "1": "N",
+    "2": "D",
+    "3": ":",
+    "4": "N",
+    "5": "O",
+    "6": "R",
+    "7": "M",
+    "8": "A",
+    "9": "L",
+    "10": "I",
+    "11": "Z",
+    "12": "A",
+    "13": "D",
+    "14": "O",
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "",
+    "Qual o tipo de problema reportado pelo cliente?": "Interrompido – GPON",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "inicio",
+      "text": "Qual o tipo de problema reportado pelo cliente?",
+      "action": "select",
+      "set": {
+        "Qual o tipo de problema reportado pelo cliente?": "Interrompido – GPON"
+      }
+    },
+    {
+      "id": "gpon_int_start",
+      "text": "Interrompido – GPON: início do diagnóstico.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "yes",
+      "set": "END:NORMALIZADO"
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – NORMALIZADO COM CLIENTE\nCliente: undefined\nServiço: undefined\nBD: undefined\n\nStatus Final: NORMALIZADO\nAção Técnica: \nTestes Executados: Ping, ARP, Interface\nValidação: Cliente confirmou pleno funcionamento\n\nResponsável: undefined\nData: 13/03/2026, 13:32:11"
+}

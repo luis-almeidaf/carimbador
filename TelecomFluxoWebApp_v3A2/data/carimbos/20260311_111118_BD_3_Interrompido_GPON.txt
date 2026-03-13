@@ -1,0 +1,11 @@
+📌 ENCERRAMENTO – PRÉ-MASSIVA
+Cliente: SERVICO SOCIAL DA INDUSTRIA - SESI
+Serviço: <TIPO>
+BD: <NUMERO>
+
+Indicador: Possível falha coletiva
+Evidências: 123
+
+Encaminhamento: Pré-Massiva
+Responsável: Luane Carolina Petla de Queiroz 
+Data: 11/03/2026, 11:11:17

@@ -1,0 +1,44 @@
+{
+  "flow": "7_Falha_Acesso_Especifico",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "exemplo",
+    "Evidências iniciais (logs/prints/horários)": "exemplo",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "Perda de ping (%)": "100",
+    "Nível de sinal (dBm)": "-25",
+    "motivo_campo": "Sinal óptico abaixo do mínimo",
+    "falha_identificada": "Interrompido interface up no gpon",
+    "testes_realizados": "Ping, ARP, Interface",
+    "segmento": "IP Dedicado",
+    "Destino (URL/IP/porta)": "google.com/10",
+    "conclusao_tecnica": "Falha tal no site google.com"
+  },
+  "trail": [
+    {
+      "id": "f1",
+      "text": "Destino (URL/IP/porta)",
+      "action": "input",
+      "set": {
+        "Destino (URL/IP/porta)": "google.com/10"
+      }
+    },
+    {
+      "id": "f2",
+      "text": "Falha reproduzida no CPE?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "f3",
+      "text": "Conclusão técnica",
+      "action": "note",
+      "set": {
+        "conclusao_tecnica": "Falha tal no site google.com"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO AO DIAGNÓSTICO\nCliente: SAO PAULO SECRETARIA DO VERDE E DO MEIO AMBIENTE\nServiço: REDE IP MULTI SERVIÇOS / PRODAM   N\nBD: 6605219\n\nFalha Identificada: Interrompido interface up no gpon\nConclusão Técnica: Falha tal no site google.com\nTestes Executados: Ping, ARP, Interface\n\nEncaminhamento: Diagnóstico N2\nResponsável: Sgoe\nData: 13/03/2026, 09:42:21"
+}

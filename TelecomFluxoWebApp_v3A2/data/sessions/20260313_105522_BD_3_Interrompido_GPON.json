@@ -1,0 +1,70 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "teste",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "chk_contato",
+      "text": "Foi possível contato com o cliente para validação física?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v1_energia",
+      "text": "CHECKLIST: Equipamentos VIVO (Modem/SWT) estão ligados?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v2_leds",
+      "text": "CHECKLIST: Os LEDs dos equipamentos estão acesos?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v3_cabos",
+      "text": "CHECKLIST: Todos os cabos estão conectados firmemente?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v4_reset",
+      "text": "CHECKLIST: Realizado Reset/Religue dos equipamentos?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v5_normalizou",
+      "text": "O serviço normalizou após estas ações físicas?",
+      "action": "yes",
+      "set": {}
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – NORMALIZADO COM CLIENTE\nCliente: COMPANHIA DE SANEAMENTO BASICO DO ESTADO DE SAO PAULO - SABESP\nServiço: IP MULTI SERVIÇO / INTRAGOV N\nBD: 6604043\n\nStatus Final: NORMALIZADO\nAção Técnica: \nTestes Executados: Ping, ARP, Interface\nValidação: Cliente confirmou pleno funcionamento\n\nResponsável: EVELYN ANTUNES ROSA DOS SANTOS\nData: 13/03/2026, 10:55:22"
+}

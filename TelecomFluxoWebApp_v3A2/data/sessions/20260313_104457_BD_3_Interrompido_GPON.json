@@ -1,0 +1,94 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "1",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "Perda de ping (%) após checklist": "100",
+    "evidencias_massiva": "1234",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "chk_contato",
+      "text": "Foi possível contato com o cliente para validação física?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v1_energia",
+      "text": "CHECKLIST: Equipamentos VIVO (Modem/SWT) estão ligados?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v2_leds",
+      "text": "CHECKLIST: Os LEDs dos equipamentos estão acesos?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v3_cabos",
+      "text": "CHECKLIST: Todos os cabos estão conectados firmemente?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v4_reset",
+      "text": "CHECKLIST: Realizado Reset/Religue dos equipamentos?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "v5_normalizou",
+      "text": "O serviço normalizou após estas ações físicas?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4",
+      "text": "Perda de ping (%) após checklist",
+      "action": "input",
+      "set": {
+        "Perda de ping (%) após checklist": "100"
+      }
+    },
+    {
+      "id": "g5",
+      "text": "Consta massiva para a região?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g5a",
+      "text": "Evidências massiva -",
+      "action": "note",
+      "set": {
+        "evidencias_massiva": "1234"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – PRÉ-MASSIVA\nCliente: undefined\nServiço: undefined\nBD: undefined\n\nIndicador: Possível falha coletiva\nEvidências: 1234\n\nEncaminhamento: Pré-Massiva\nResponsável: undefined\nData: 13/03/2026, 10:44:57"
+}

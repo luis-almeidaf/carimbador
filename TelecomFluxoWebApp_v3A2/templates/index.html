@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fluxos Telecom – v3A-2 (Checklist Global + Save Carimbo)</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Fluxos Telecom – v3A-2 <span class="badge">Checklist Global + Carimbo salvo</span></h1>
+    <p>Protótipo com Checklist global obrigatório → Seleção de Fluxo → Execução → Carimbo automático e persistência.</p>
+  </header>
+
+  <main class="grid">
+    <section class="panel span-2">
+      <h2>1 - Consulta do bd</h2>
+      <div class="col-md-3">
+        <input 
+          id="bdInput" 
+          name="consultaBd" 
+          placeholder="Digite o BD:"
+        />
+        <button class="btn btn-warning btn-sm" id="bdInputBtn" onclick="consultaBd()">Consultar</button>
+      </div>
+
+      <h2 hidden class="bdsInfoContainer">Dados do BD</h2>
+      <div hidden class="bdsInfoContainer card" id="bdsInfo">
+        <table>
+          <thead>
+            <tr>
+              <th>BD</th>
+              <th>Grupo</th>
+              <th>Produto</th>
+              <th>Rede</th>
+              <th>Status</th>
+              <th>Tipo Abertura</th>
+              <th>Procedencia</th>
+              <th>Serviço</th>
+            </tr>
+          </thead>
+          <tbody id="bdsInfoBody"></tbody>
+        </table>
+      </div>
+
+      <h2 hidden class="clienteInfoContainer">Dados do cliente</h2>
+      <div hidden class="clienteInfoContainer card" id="clienteInfo">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Designador</th>
+              <th>LP</th>
+              <th>Id Vantive</th>
+              <th>Documento</th>
+              <th>Estado</th>
+              <th>Cidade</th>
+              <th>Endereco</th>
+            </tr>
+          </thead>
+          <tbody id="clienteInfoBody"></tbody>
+        </table>
+      </div>
+
+      <h2 hidden class="falhaInfoContainer">Dados da falha</h2>
+      <div hidden class="falhaInfoContainer card" id="falhaInfo">
+        <table>
+          <thead>
+            <tr>
+              <th>Reclamação</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody id="falhaInfoBody"></tbody>
+        </table>
+      </div>
+
+      <h2>2 - Checklist Global (obrigatório)</h2>
+      <form id="checklist" class="card"></form>
+      <div class="controls">
+        <button id="btnChecklistDone" class="btn">Concluir checklist</button>
+      </div>
+
+      <h2>3 - Seleção de Fluxo</h2>
+      <div class="controls">
+        <label for="flowSelect">Escolha o fluxo:</label>
+        <select id="flowSelect"></select>
+        <button id="btnStart" class="btn" disabled>Iniciar Fluxo</button>
+      </div>
+
+      <h2>4 - Execução do Fluxo</h2>
+      <div id="flowBox" class="flow"></div>
+
+      <h2>5 - Carimbo</h2>
+      <div id="carimbo" class="carimbo"></div>
+      <div class="controls">
+        <button id="btnCopy" class="btn" disabled>Copiar carimbo</button>
+        <button id="btnDownloadTrail" class="btn" disabled>Baixar trilha (JSON)</button>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <h2>Variáveis do Atendimento</h2>
+      <div id="vars"></div>
+    </aside>
+  </main>
+
+  <footer>
+    <small></small>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+{
+  "flow": "Fluxo_Completo_Operacao",
+  "bd": "BD",
+  "vars": {
+    "0": "E",
+    "1": "N",
+    "2": "D",
+    "3": ":",
+    "4": "N",
+    "5": "O",
+    "6": "R",
+    "7": "M",
+    "8": "A",
+    "9": "L",
+    "10": "I",
+    "11": "Z",
+    "12": "A",
+    "13": "D",
+    "14": "O",
+    "15": "a",
+    "16": "d",
+    "17": "e",
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "",
+    "ci_chamado_aberto": "123445",
+    "ci_endereco_contrato": "Est da Colonia, 00000 - S PAULO",
+    "ci_dados_cliente": "",
+    "ci_telefone_retorno": "1234556",
+    "ci_disponibilidade_testes": "agora",
+    "ci_detalhes_reclamacao": "Sem navegação desde as 9 horas da manhã.",
+    "ci_evidencias_iniciais": "",
+    "Qual é a reclamação?": "Interrompido",
+    "Interrompido — qual o segmento?": "GPON",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "checklist_intro",
+      "text": "CHECKLIST INICIAL – Contato com o cliente. Antes de classificar a falha, valide as informações abaixo.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "contato_cliente",
+      "text": "Conseguiu contato com o cliente?",
+      "action": "yes",
+      "set": "ci_chamado"
+    },
+    {
+      "id": "ci_chamado",
+      "text": "Existe chamado aberto? Informe o número/ID (ou 'não')",
+      "action": "input",
+      "set": {
+        "ci_chamado_aberto": "123445"
+      }
+    },
+    {
+      "id": "ci_endereco",
+      "text": "Validar endereço/contrato do circuito",
+      "action": "input",
+      "set": {
+        "ci_endereco_contrato": "Est da Colonia, 00000 - S PAULO"
+      }
+    },
+    {
+      "id": "ci_dados_cliente",
+      "text": "Validar dados do cliente (nome/unidade/identificação)",
+      "action": "input",
+      "set": {
+        "ci_dados_cliente": ""
+      }
+    },
+    {
+      "id": "ci_telefone",
+      "text": "Validar telefone de retorno",
+      "action": "input",
+      "set": {
+        "ci_telefone_retorno": "1234556"
+      }
+    },
+    {
+      "id": "ci_no_local",
+      "text": "Cliente está no local para testes?",
+      "action": "yes",
+      "set": "ci_disponibilidade"
+    },
+    {
+      "id": "ci_disponibilidade",
+      "text": "Disponibilidade para testes (agora/horário)",
+      "action": "input",
+      "set": {
+        "ci_disponibilidade_testes": "agora"
+      }
+    },
+    {
+      "id": "ci_reset",
+      "text": "Já foi realizado reset/religue dos equipamentos?",
+      "action": "yes",
+      "set": "ci_detalhes"
+    },
+    {
+      "id": "ci_detalhes",
+      "text": "Entender detalhes da reclamação",
+      "action": "input",
+      "set": {
+        "ci_detalhes_reclamacao": "Sem navegação desde as 9 horas da manhã."
+      }
+    },
+    {
+      "id": "ci_evidencias",
+      "text": "Coletar evidências iniciais",
+      "action": "input",
+      "set": {
+        "ci_evidencias_iniciais": ""
+      }
+    },
+    {
+      "id": "classificar_reclamacao",
+      "text": "Qual é a reclamação?",
+      "action": "select",
+      "set": {
+        "Qual é a reclamação?": "Interrompido"
+      }
+    },
+    {
+      "id": "sel_segmento_interrompido",
+      "text": "Interrompido — qual o segmento?",
+      "action": "select",
+      "set": {
+        "Interrompido — qual o segmento?": "GPON"
+      }
+    },
+    {
+      "id": "gpon_int_start",
+      "text": "Interrompido – GPON: início do diagnóstico.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "yes",
+      "set": "END:NORMALIZADO"
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "yes",
+      "set": "END:NORMALIZADO"
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "yes",
+      "set": "END:NORMALIZADO"
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – NORMALIZADO COM CLIENTE\nCliente: SAO PAULO SECRETARIA DO VERDE E DO MEIO AMBIENTE\nServiço: REDE IP MULTI SERVIÇOS / PRODAM   N\nBD: 6607094\n\nStatus Final: NORMALIZADO\nAção Técnica: \nTestes Executados: Ping, ARP, Interface\nValidação: Cliente confirmou pleno funcionamento\n\nResponsável: Sgoe\nData: 13/03/2026, 13:58:14"
+}

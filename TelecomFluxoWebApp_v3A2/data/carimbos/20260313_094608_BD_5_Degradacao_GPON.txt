@@ -1,0 +1,12 @@
+📌 ENCERRAMENTO – ENVIADO AO DIAGNÓSTICO
+Cliente: SAO PAULO SECRETARIA DO VERDE E DO MEIO AMBIENTE
+Serviço: REDE IP MULTI SERVIÇOS / PRODAM   N
+BD: 6605219
+
+Falha Identificada: Interrompido interface up no gpon
+Conclusão Técnica: Cliente reclama de perca de pacotes, não encontrando falhas na rede interna nem na rede vivo
+Testes Executados: Ping, ARP, Interface
+
+Encaminhamento: Diagnóstico N2
+Responsável: Sgoe
+Data: 13/03/2026, 09:46:08

@@ -1,0 +1,102 @@
+{
+  "flow": "Fluxo_Completo_Operacao",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Coleta inicial com o cliente:": "",
+    "Qual o tipo de problema reportado pelo cliente?": "Interrompido – GPON",
+    "testes_realizados": "Ping, ARP, Interface",
+    "sinal_dbm": "-20"
+  },
+  "trail": [
+    {
+      "id": "inicio",
+      "text": "Qual o tipo de problema reportado pelo cliente?",
+      "action": "select",
+      "set": {
+        "Qual o tipo de problema reportado pelo cliente?": "Interrompido – GPON"
+      }
+    },
+    {
+      "id": "gpon_int_start",
+      "text": "Interrompido – GPON: início do diagnóstico.",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "chk_vivo_1",
+      "text": "CHECKLIST VIVO: Modem/SWT ligados e com LEDs acesos?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "chk_vivo_2",
+      "text": "CHECKLIST VIVO: Cabos conectados e realizou Reset/Religue?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g3_reteste",
+      "text": "Normalizou após checklist/reset?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g3_reteste",
+      "text": "Normalizou após checklist/reset?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4_olt",
+      "text": "Acesso à OLT está OK?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g5_sincronismo",
+      "text": "Sincronismo da fibra está OK?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g6_lan",
+      "text": "LAN da ONT está OK?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g7_sinal",
+      "text": "Nível de sinal medido (dBm).",
+      "action": "input",
+      "set": {
+        "sinal_dbm": "-20"
+      }
+    },
+    {
+      "id": "g8_sinal_check",
+      "text": "Sinal dentro do padrão (>-27 dBm)?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g8_sinal_check",
+      "text": "Sinal dentro do padrão (>-27 dBm)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g9_metro",
+      "text": "Rede Metro (Túnel) OK?",
+      "action": "yes",
+      "set": {}
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO AO DIAGNÓSTICO\nCliente: SAO PAULO SECRETARIA DO VERDE E DO MEIO AMBIENTE\nServiço: REDE IP MULTI SERVIÇOS / PRODAM   N\nBD: 6605219\n\nFalha Identificada: \nConclusão Técnica: \nTestes Executados: Ping, ARP, Interface\n\nEncaminhamento: Diagnóstico N2\nResponsável: Sgoe\nData: 13/03/2026, 11:47:48"
+}

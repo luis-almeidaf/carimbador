@@ -1,0 +1,513 @@
+{
+  "Fluxo_Completo_Operacao": {
+    "title": "Fluxo Completo – Interrompido / Degradação / Falha Específica (IPD + VPN) + Checklist",
+    "version": "1.0",
+    "start": "inicio",
+    "steps": [
+      {
+        "id": "inicio",
+        "type": "choice",
+        "text": "Qual o tipo de problema reportado pelo cliente?",
+        "options": [
+          {
+            "label": "Interrompido – GPON",
+            "next": "gpon_int_start"
+          },
+          {
+            "label": "Interrompido – SWT",
+            "next": "swt_int_start"
+          },
+          {
+            "label": "Degradação – GPON",
+            "next": "gpon_deg_start"
+          },
+          {
+            "label": "Degradação – SWT",
+            "next": "swt_deg_start"
+          },
+          {
+            "label": "Falha Específica (IP Dedicado / VPN)",
+            "next": "fe_q1"
+          }
+        ]
+      },
+      {
+        "id": "fe_q1",
+        "type": "choice",
+        "text": "Qual a Reclamação? (Item 1)",
+        "options": [
+          {
+            "label": "Não acessa site específico",
+            "next": "fe_checklist_intro_ipd"
+          },
+          {
+            "label": "Não comunica com servidor específico",
+            "next": "fe_checklist_intro_ipd"
+          },
+          {
+            "label": "Porta bloqueada",
+            "next": "fe_checklist_intro_ipd"
+          },
+          {
+            "label": "Falha em aplicação",
+            "next": "fe_checklist_intro_ipd"
+          },
+          {
+            "label": "Não fecha VPN",
+            "next": "fe_checklist_intro_vpn"
+          }
+        ]
+      },
+      {
+        "id": "fe_checklist_intro_ipd",
+        "type": "message",
+        "text": "Falha Específica – IP Dedicado: Coleta de informações conforme Checklist (Item 5).",
+        "next": "fe_ent_1"
+      },
+      {
+        "id": "fe_checklist_intro_vpn",
+        "type": "choice",
+        "text": "Falha Específica – VPN: Qual a reclamação?",
+        "options": [
+          {
+            "label": "Não comunica com matriz",
+            "next": "fe_ent_1"
+          },
+          {
+            "label": "Não comunica com outra unidade",
+            "next": "fe_ent_1"
+          },
+          {
+            "label": "Não acessa aplicação / IP específico via VPN",
+            "next": "fe_ent_1"
+          }
+        ]
+      },
+      {
+        "id": "fe_ent_1",
+        "type": "message",
+        "text": "Checklist – Entrevista (Item 5): validar chamado existente e entender detalhes da reclamação.",
+        "next": "fe_chamado_existente"
+      },
+      {
+        "id": "fe_chamado_existente",
+        "type": "input",
+        "key": "chamado_existente",
+        "text": "Há chamado aberto sobre este caso? Informe nº/ID (ou 'não').",
+        "placeholder": "Ex.: INC123456",
+        "next": "fe_detalhes_reclamacao"
+      },
+      {
+        "id": "fe_detalhes_reclamacao",
+        "type": "input",
+        "key": "detalhes_reclamacao",
+        "text": "Descreva detalhes da reclamação do cliente.",
+        "placeholder": "O que exatamente não funciona? Desde quando? Impacto?",
+        "next": "fe_int_vivo_on"
+      },
+      {
+        "id": "fe_int_vivo_on",
+        "type": "yesno",
+        "text": "Modem/SWT estão ligados com LEDs acesos?",
+        "yes": "fe_int_cabos",
+        "no": "fe_int_reset"
+      },
+      {
+        "id": "fe_int_cabos",
+        "type": "yesno",
+        "text": "Cabos conectados corretamente (sem folga/avaria)?",
+        "yes": "fe_int_reset",
+        "no": "fe_int_reset"
+      },
+      {
+        "id": "fe_int_reset",
+        "type": "yesno",
+        "text": "Foi realizado Reset/Religue dos equipamentos?",
+        "yes": "fe_deg_abrangencia",
+        "no": "fe_deg_abrangencia"
+      },
+      {
+        "id": "fe_deg_abrangencia",
+        "type": "choice",
+        "text": "A falha ocorre em todo o tráfego ou em destino específico?",
+        "options": [
+          {
+            "label": "Toda a navegação / todo o tráfego",
+            "next": "fe_deg_monitora"
+          },
+          {
+            "label": "Destino específico (site/servidor/app)",
+            "next": "fe_especifico_quais"
+          }
+        ]
+      },
+      {
+        "id": "fe_deg_monitora",
+        "type": "yesno",
+        "text": "Cliente visualiza perda/latência em ferramenta de monitoramento ou via ping estendido?",
+        "yes": "fe_deg_percentual",
+        "no": "fe_deg_percentual"
+      },
+      {
+        "id": "fe_deg_percentual",
+        "type": "input",
+        "key": "percentual_perda",
+        "text": "Qual o percentual de perda/latência observado? (se aplicável)",
+        "placeholder": "Ex.: 5% perda / 250 ms",
+        "next": "fe_deg_quando"
+      },
+      {
+        "id": "fe_deg_quando",
+        "type": "input",
+        "key": "quando_percebeu",
+        "text": "Quando a falha começou a ocorrer?",
+        "placeholder": "Data/hora aproximada",
+        "next": "fe_deg_banda_tipo"
+      },
+      {
+        "id": "fe_deg_banda_tipo",
+        "type": "choice",
+        "text": "Banda afetada",
+        "options": [
+          {
+            "label": "Download",
+            "next": "fe_deg_banda_ambiente"
+          },
+          {
+            "label": "Upload",
+            "next": "fe_deg_banda_ambiente"
+          },
+          {
+            "label": "Ambos",
+            "next": "fe_deg_banda_ambiente"
+          }
+        ]
+      },
+      {
+        "id": "fe_deg_banda_ambiente",
+        "type": "input",
+        "key": "ambiente_teste",
+        "text": "Ambiente de teste (interno/externo, horário, quem testou, ferramenta).",
+        "placeholder": "Ex.: ping/jperf/browser, interno, horário de pico/vale",
+        "next": "fe_especifico_quais"
+      },
+      {
+        "id": "fe_especifico_quais",
+        "type": "input",
+        "key": "destino_especifico",
+        "text": "Qual o site/servidor/aplicação/IP/porta específica afetada?",
+        "placeholder": "URL/IP/Porta/Aplicação",
+        "next": "fe_operadora_destino"
+      },
+      {
+        "id": "fe_operadora_destino",
+        "type": "input",
+        "key": "operadora_destino",
+        "text": "Se IP/rota externa: qual a operadora/ASN do destino (se conhecido)?",
+        "placeholder": "Ex.: ASNXXXX/Operadora Y",
+        "next": "fe_reproducao_cpe"
+      },
+      {
+        "id": "fe_reproducao_cpe",
+        "type": "yesno",
+        "text": "Falha foi reproduzida localmente no CPE/ONT/SWT?",
+        "yes": "fe_logs_evidencias",
+        "no": "fe_logs_evidencias"
+      },
+      {
+        "id": "fe_logs_evidencias",
+        "type": "input",
+        "key": "evidencias",
+        "text": "Evidências coletadas (prints de ping/traceroute, logs, horários, origem/destino, protocolos).",
+        "placeholder": "Liste todas as evidências",
+        "next": "fe_resumo_envio"
+      },
+      {
+        "id": "fe_resumo_envio",
+        "type": "message",
+        "text": "Coleta concluída. Enviar BD ao Diagnóstico com as informações acima.",
+        "next": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gpon_int_start",
+        "type": "message",
+        "text": "Interrompido – GPON: início do diagnóstico.",
+        "next": "g3"
+      },
+      {
+        "id": "g3",
+        "type": "yesno",
+        "text": "Conectividade OK (Ping/ARP)?",
+        "yes": "END:NORMALIZADO",
+        "no": "chk_vivo_1"
+      },
+      {
+        "id": "chk_vivo_1",
+        "type": "yesno",
+        "text": "CHECKLIST VIVO: Modem/SWT ligados e com LEDs acesos?",
+        "yes": "chk_vivo_2",
+        "no": "g4_olt"
+      },
+      {
+        "id": "chk_vivo_2",
+        "type": "yesno",
+        "text": "CHECKLIST VIVO: Cabos conectados e realizou Reset/Religue?",
+        "yes": "g3_reteste",
+        "no": "g4_olt"
+      },
+      {
+        "id": "g3_reteste",
+        "type": "yesno",
+        "text": "Normalizou após checklist/reset?",
+        "yes": "END:NORMALIZADO",
+        "no": "g4_olt"
+      },
+      {
+        "id": "g4_olt",
+        "type": "yesno",
+        "text": "Acesso à OLT está OK?",
+        "yes": "g5_sincronismo",
+        "no": "g_massiva"
+      },
+      {
+        "id": "g_massiva",
+        "type": "yesno",
+        "text": "Há Manutenção (TAP) ou Massiva na região?",
+        "yes": "END:PRE_MASSIVA",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g5_sincronismo",
+        "type": "yesno",
+        "text": "Sincronismo da fibra está OK?",
+        "yes": "g6_lan",
+        "no": "g5_pon"
+      },
+      {
+        "id": "g5_pon",
+        "type": "yesno",
+        "text": "Porta PON está UP?",
+        "yes": "END:DIAGNOSTICO",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "g6_lan",
+        "type": "yesno",
+        "text": "LAN da ONT está OK?",
+        "yes": "g7_sinal",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "g7_sinal",
+        "type": "input",
+        "key": "sinal_dbm",
+        "text": "Nível de sinal medido (dBm).",
+        "placeholder": "Ex.: -20.5",
+        "next": "g8_sinal_check"
+      },
+      {
+        "id": "g8_sinal_check",
+        "type": "yesno",
+        "text": "Sinal dentro do padrão (>-27 dBm)?",
+        "yes": "END:NORMALIZADO",
+        "no": "g9_metro"
+      },
+      {
+        "id": "g9_metro",
+        "type": "yesno",
+        "text": "Rede Metro (Túnel) OK?",
+        "yes": "END:DIAGNOSTICO",
+        "no": "END:PRE_MASTER"
+      },
+      {
+        "id": "swt_int_start",
+        "type": "message",
+        "text": "Interrompido – SWT: início do diagnóstico.",
+        "next": "s1_ping"
+      },
+      {
+        "id": "s1_ping",
+        "type": "yesno",
+        "text": "Conectividade ao CPE/SWT (ping/ARP) está OK?",
+        "yes": "s2_vlan",
+        "no": "s_massiva"
+      },
+      {
+        "id": "s_massiva",
+        "type": "yesno",
+        "text": "Há Manutenção/Massiva na região?",
+        "yes": "END:PRE_MASSIVA",
+        "no": "s_acesso_swt"
+      },
+      {
+        "id": "s_acesso_swt",
+        "type": "yesno",
+        "text": "Acesso gerencial ao SWT está OK?",
+        "yes": "s2_vlan",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "s2_vlan",
+        "type": "yesno",
+        "text": "VLAN/Porta de cliente no SWT está UP/forwarding?",
+        "yes": "s3_uplink",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "s3_uplink",
+        "type": "yesno",
+        "text": "Uplink do SWT está UP?",
+        "yes": "s4_lan",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "s4_lan",
+        "type": "yesno",
+        "text": "LAN/porta do cliente no SWT com tráfego?",
+        "yes": "s5_testes",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "s5_testes",
+        "type": "yesno",
+        "text": "Após ajustes/testes, normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gpon_deg_start",
+        "type": "message",
+        "text": "Degradação – GPON: início do diagnóstico.",
+        "next": "gd1_escopo"
+      },
+      {
+        "id": "gd1_escopo",
+        "type": "choice",
+        "text": "Escopo da degradação",
+        "options": [
+          {
+            "label": "Geral (todo tráfego)",
+            "next": "gd2_sinal"
+          },
+          {
+            "label": "Específica (destino/protocolo)",
+            "next": "gd5_destino"
+          }
+        ]
+      },
+      {
+        "id": "gd2_sinal",
+        "type": "input",
+        "key": "gpon_deg_sinal",
+        "text": "Informe o sinal (dBm) atual da ONT.",
+        "placeholder": "Ex.: -23.0",
+        "next": "gd3_sinal_ok"
+      },
+      {
+        "id": "gd3_sinal_ok",
+        "type": "yesno",
+        "text": "Sinal está dentro do padrão (>-27 dBm)?",
+        "yes": "gd4_lan",
+        "no": "END:CAMPO"
+      },
+      {
+        "id": "gd4_lan",
+        "type": "yesno",
+        "text": "LAN da ONT está OK (sem erros/CRC, sem flaps)?",
+        "yes": "gd6_teste_banda",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gd6_teste_banda",
+        "type": "yesno",
+        "text": "Testes de banda/latência normalizaram após ajustes?",
+        "yes": "END:NORMALIZADO",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "gd5_destino",
+        "type": "input",
+        "key": "gpon_deg_dest",
+        "text": "Qual o destino/protocolo afetado?",
+        "placeholder": "URL/IP/Porta/Protocolo",
+        "next": "gd7_metro"
+      },
+      {
+        "id": "gd7_metro",
+        "type": "yesno",
+        "text": "Rede Metro/Túnel está OK?",
+        "yes": "gd8_diag",
+        "no": "END:PRE_MASTER"
+      },
+      {
+        "id": "gd8_diag",
+        "type": "message",
+        "text": "Coletar evidências (ping/traceroute/horários).",
+        "next": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "swt_deg_start",
+        "type": "message",
+        "text": "Degradação – SWT: início do diagnóstico.",
+        "next": "sd1_scope"
+      },
+      {
+        "id": "sd1_scope",
+        "type": "choice",
+        "text": "Escopo da degradação",
+        "options": [
+          {
+            "label": "Geral (todo tráfego)",
+            "next": "sd2_cpu_mem"
+          },
+          {
+            "label": "Específica (destino/protocolo)",
+            "next": "sd5_destino"
+          }
+        ]
+      },
+      {
+        "id": "sd2_cpu_mem",
+        "type": "yesno",
+        "text": "SWT sem saturação (CPU/memória/erros) e sem flaps de portas?",
+        "yes": "sd3_queue",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "sd3_queue",
+        "type": "yesno",
+        "text": "Fila/queue e policers dentro do esperado?",
+        "yes": "sd4_teste",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "sd4_teste",
+        "type": "yesno",
+        "text": "Após ajustes/testes de banda/latência normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "sd5_destino",
+        "type": "input",
+        "key": "swt_deg_dest",
+        "text": "Qual destino/protocolo afetado?",
+        "placeholder": "URL/IP/Porta/Protocolo",
+        "next": "sd6_metro"
+      },
+      {
+        "id": "sd6_metro",
+        "type": "yesno",
+        "text": "Rede Metro/Túnel está OK?",
+        "yes": "sd7_diag",
+        "no": "END:PRE_MASTER"
+      },
+      {
+        "id": "sd7_diag",
+        "type": "message",
+        "text": "Coletar evidências (ping/traceroute/horários).",
+        "next": "END:DIAGNOSTICO"
+      }
+    ]
+  }
+}

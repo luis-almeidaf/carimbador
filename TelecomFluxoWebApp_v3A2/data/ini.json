@@ -1,0 +1,437 @@
+{
+  "3_Interrompido_GPON": {
+    "title": "Interrompido – GPON (Com Checklist Físico)",
+    "defaults": {
+      "Segmento": "GPON"
+    },
+    "start": "g1",
+    "steps": [
+      {
+        "id": "g1",
+        "type": "info",
+        "text": "Localize o cliente no inventário (GPON)",
+        "next": "g2"
+      },
+      {
+        "id": "g2",
+        "type": "select",
+        "key": "interface_status",
+        "text": "Status da interface",
+        "options": [
+          {
+            "value": "UP",
+            "label": "UP/UP"
+          },
+          {
+            "value": "DOWN",
+            "label": "DOWN"
+          },
+          {
+            "value": "ERROS",
+            "label": "UP com erros"
+          }
+        ],
+        "next": "g3"
+      },
+      {
+        "id": "g3",
+        "type": "yesno",
+        "text": "Conectividade OK (Ping/ARP)?",
+        "yes": "END:NORMALIZADO",
+        "no": "chk_contato",
+        "yesSet": {
+          "ping_loss": "0",
+          "acao_tecnica": "Checklist + validações de conectividade"
+        }
+      },
+      {
+        "id": "chk_contato",
+        "type": "yesno",
+        "text": "Foi possível contato com o cliente para validação física?",
+        "yes": "v1_energia",
+        "no": "g4"
+      },
+      {
+        "id": "v1_energia",
+        "type": "yesno",
+        "text": "CHECKLIST: Equipamentos VIVO (Modem/SWT) estão ligados?",
+        "yes": "v2_leds",
+        "no": "v_orientar_ligar"
+      },
+      {
+        "id": "v_orientar_ligar",
+        "type": "info",
+        "text": "Oriente o cliente a ligar os equipamentos e aguardar 5 minutos.",
+        "next": "g3"
+      },
+      {
+        "id": "v2_leds",
+        "type": "yesno",
+        "text": "CHECKLIST: Os LEDs dos equipamentos estão acesos?",
+        "yes": "v3_cabos",
+        "no": "g4"
+      },
+      {
+        "id": "v3_cabos",
+        "type": "yesno",
+        "text": "CHECKLIST: Todos os cabos estão conectados firmemente?",
+        "yes": "v4_reset",
+        "no": "v_orientar_cabos"
+      },
+      {
+        "id": "v_orientar_cabos",
+        "type": "info",
+        "text": "Solicite o reencaixe dos cabos e teste novamente.",
+        "next": "g3"
+      },
+      {
+        "id": "v4_reset",
+        "type": "yesno",
+        "text": "CHECKLIST: Realizado Reset/Religue dos equipamentos?",
+        "yes": "v5_normalizou",
+        "no": "v_solicitar_reset"
+      },
+      {
+        "id": "v_solicitar_reset",
+        "type": "info",
+        "text": "Realize o Reset/Religue remoto ou peça ao cliente para fazê-lo.",
+        "next": "v5_normalizou"
+      },
+      {
+        "id": "v5_normalizou",
+        "type": "yesno",
+        "text": "O serviço normalizou após estas ações físicas?",
+        "yes": "END:NORMALIZADO",
+        "no": "g4"
+      },
+      {
+        "id": "g4",
+        "type": "input",
+        "key": "ping_loss",
+        "text": "Perda de ping (%) após checklist",
+        "placeholder": "Ex.: 100, 80, 50",
+        "next": "g5"
+      },
+      {
+        "id": "g5",
+        "type": "yesno",
+        "text": "Consta massiva para a região?",
+        "yes": "g5a",
+        "no": "g6"
+      },
+      {
+        "id": "g5a",
+        "type": "note",
+        "key": "evidencias_massiva",
+        "text": "Evidências massiva -",
+        "placeholder": "Digite o valor da massiva",
+        "next": "END:PRE_MASSIVA"
+      },
+      {
+        "id": "g6",
+        "type": "input",
+        "key": "sinal_dbm",
+        "text": "Nível de sinal medido (dBm)",
+        "placeholder": "Ex.: -20.5",
+        "next": "g7"
+      },
+      {
+        "id": "g7",
+        "type": "yesno",
+        "text": "Sinal abaixo do mínimo? (<= -27 dBm)",
+        "yes": "g7a",
+        "no": "g11",
+        "yesSet": {
+          "motivo_campo": "Sinal óptico abaixo do mínimo"
+        }
+      },
+      {
+        "id": "g7a",
+        "type": "note",
+        "key": "conclusao_tecnica",
+        "text": "Conclusão técnica para campo",
+        "placeholder": "Ex.: Ajuste físico na fibra/CTO.",
+        "next": "END:CAMPO"
+      },
+      {
+        "id": "g11",
+        "type": "note",
+        "key": "falha_identificada",
+        "text": "Falha identificada (Lógica)",
+        "placeholder": "Ex.: Autenticação/ARP/Rota.",
+        "next": "END:DIAGNOSTICO"
+      }
+    ]
+  },
+  "4_Interrompido_SWT": {
+    "title": "Interrompido – SWT",
+    "defaults": {
+      "Segmento": "SWT"
+    },
+    "start": "s1",
+    "steps": [
+      {
+        "id": "s1",
+        "type": "select",
+        "key": "porta_status",
+        "text": "Porta CPE",
+        "options": [
+          {
+            "value": "UP",
+            "label": "UP"
+          },
+          {
+            "value": "DOWN",
+            "label": "DOWN"
+          },
+          {
+            "value": "ERROS",
+            "label": "UP com erros"
+          }
+        ],
+        "next": "s2"
+      },
+      {
+        "id": "s2",
+        "type": "yesno",
+        "text": "Ping WAN CPE OK?",
+        "yes": "END:NORMALIZADO",
+        "no": "s3",
+        "yesSet": {
+          "ping_loss": "0",
+          "acao_tecnica": "Ajustes/clear counters/reconfig porta"
+        }
+      },
+      {
+        "id": "s3",
+        "type": "yesno",
+        "text": "Cliente pode resetar/verificar cabos?",
+        "yes": "s4",
+        "no": "s5"
+      },
+      {
+        "id": "s4",
+        "type": "yesno",
+        "text": "Após ação com cliente, normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "s6"
+      },
+      {
+        "id": "s5",
+        "type": "note",
+        "key": "falha_identificada",
+        "text": "Falha (sem ação cliente)",
+        "placeholder": "Descrever.",
+        "next": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "s6",
+        "type": "note",
+        "key": "motivo_campo",
+        "text": "Motivo de envio a campo",
+        "placeholder": "Ex.: Porta sem link após testes.",
+        "next": "END:CAMPO"
+      }
+    ]
+  },
+  "5_Degradacao_GPON": {
+    "title": "Degradação – GPON",
+    "defaults": {
+      "Segmento": "GPON"
+    },
+    "start": "d1",
+    "steps": [
+      {
+        "id": "d1",
+        "type": "input",
+        "key": "ping_loss",
+        "text": "Perda de pacotes (%)",
+        "placeholder": "Ex.: 30",
+        "next": "d2"
+      },
+      {
+        "id": "d2",
+        "type": "input",
+        "key": "latencia_ms",
+        "text": "Latência (ms)",
+        "placeholder": "Ex.: 120",
+        "next": "d3"
+      },
+      {
+        "id": "d3",
+        "type": "yesno",
+        "text": "Túnel Metro/Fusion OK?",
+        "yes": "d4",
+        "no": "d5"
+      },
+      {
+        "id": "d4",
+        "type": "yesno",
+        "text": "LAN sem quedas/erros?",
+        "yes": "d6",
+        "no": "d7"
+      },
+      {
+        "id": "d5",
+        "type": "note",
+        "key": "falha_identificada",
+        "text": "Falha no Metro/Fusion",
+        "placeholder": "Detalhar evidências.",
+        "next": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "d6",
+        "type": "yesno",
+        "text": "Após orientação (reset/teste direto), normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "d7"
+      },
+      {
+        "id": "d7",
+        "type": "note",
+        "key": "conclusao_tecnica",
+        "text": "Conclusão técnica",
+        "placeholder": "Persistência de perda/latência – investigar core.",
+        "next": "END:DIAGNOSTICO"
+      }
+    ]
+  },
+  "6_Degradacao_SWT": {
+    "title": "Degradação – SWT",
+    "defaults": {
+      "segmento": "SWT"
+    },
+    "start": "x1",
+    "steps": [
+      {
+        "id": "x1",
+        "type": "select",
+        "key": "porta_status",
+        "text": "Porta rede VIVO/SWT",
+        "options": [
+          {
+            "value": "OK",
+            "label": "OK"
+          },
+          {
+            "value": "ERROS",
+            "label": "Com erros"
+          }
+        ],
+        "next": "x2"
+      },
+      {
+        "id": "x2",
+        "type": "select",
+        "key": "porta_cpe",
+        "text": "Porta conexão CPE",
+        "options": [
+          {
+            "value": "OK",
+            "label": "OK"
+          },
+          {
+            "value": "DOWN",
+            "label": "Down"
+          }
+        ],
+        "next": "x3"
+      },
+      {
+        "id": "x3",
+        "type": "yesno",
+        "text": "Após orientação (reset/teste direto), normalizou?",
+        "yes": "END:NORMALIZADO",
+        "no": "x4"
+      },
+      {
+        "id": "x4",
+        "type": "note",
+        "key": "falha_identificada",
+        "text": "Falha identificada",
+        "placeholder": "Detalhar.",
+        "next": "END:DIAGNOSTICO"
+      }
+    ]
+  },
+  "7_Falha_Acesso_Especifico": {
+    "title": "Falha de Acesso Específico (site/app/IP)",
+    "defaults": {
+      "segmento": "IP Dedicado"
+    },
+    "start": "f1",
+    "steps": [
+      {
+        "id": "f1",
+        "type": "input",
+        "key": "destino",
+        "text": "Destino (URL/IP/porta)",
+        "placeholder": "ex.: api.exemplo.com:443",
+        "next": "f2"
+      },
+      {
+        "id": "f2",
+        "type": "yesno",
+        "text": "Falha reproduzida no CPE?",
+        "yes": "f3",
+        "no": "f4"
+      },
+      {
+        "id": "f3",
+        "type": "note",
+        "key": "conclusao_tecnica",
+        "text": "Conclusão técnica",
+        "placeholder": "Ex.: Problema de rota/ACL.",
+        "next": "END:DIAGNOSTICO"
+      },
+      {
+        "id": "f4",
+        "type": "note",
+        "key": "Ação técnica",
+        "text": "Ação técnica realizada",
+        "placeholder": "Ex.: Teste alternativo/coleta de evidências.",
+        "next": "END:NORMALIZADO"
+      }
+    ]
+  },
+  "8_Banda_Lentidao": {
+    "title": "Banda / Lentidão",
+    "defaults": {
+      "segmento": "IP Dedicado"
+    },
+    "start": "b1",
+    "steps": [
+      {
+        "id": "b1",
+        "type": "input",
+        "key": "download_mbps",
+        "text": "Download atingido (Mbps)",
+        "placeholder": "Ex.: 25",
+        "next": "b2"
+      },
+      {
+        "id": "b2",
+        "type": "input",
+        "key": "upload_mbps",
+        "text": "Upload atingido (Mbps)",
+        "placeholder": "Ex.: 10",
+        "next": "b3"
+      },
+      {
+        "id": "b3",
+        "type": "yesno",
+        "text": "Limitação confirmada fora do ambiente do cliente?",
+        "yes": "b4",
+        "no": "END:NORMALIZADO"
+      },
+      {
+        "id": "b4",
+        "type": "note",
+        "key": "falha_identificada",
+        "text": "Falha identificada",
+        "placeholder": "Ex.: Saturação na porta/túnel.",
+        "next": "END:DIAGNOSTICO"
+      }
+    ]
+  }
+}

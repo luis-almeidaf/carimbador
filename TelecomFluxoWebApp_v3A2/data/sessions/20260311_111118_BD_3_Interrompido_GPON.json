@@ -1,0 +1,70 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "123",
+    "Evidências iniciais (logs/prints/horários)": "12",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "acao_tecnica": "Checklist + validações de conectividade",
+    "ping_loss": "0",
+    "testes_realizados": "Ping perda 0%",
+    "Perda de ping (%)": "123",
+    "evidencias_massiva": "123"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "yes",
+      "set": {
+        "acao_tecnica": "Checklist + validações de conectividade",
+        "ping_loss": "0"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4",
+      "text": "Perda de ping (%)",
+      "action": "input",
+      "set": {
+        "Perda de ping (%)": "123"
+      }
+    },
+    {
+      "id": "g5",
+      "text": "Consta massiva para a região?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g5a",
+      "text": "Evidências massiva",
+      "action": "note",
+      "set": {
+        "evidencias_massiva": "123"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – PRÉ-MASSIVA\nCliente: SERVICO SOCIAL DA INDUSTRIA - SESI\nServiço: <TIPO>\nBD: <NUMERO>\n\nIndicador: Possível falha coletiva\nEvidências: 123\n\nEncaminhamento: Pré-Massiva\nResponsável: Luane Carolina Petla de Queiroz \nData: 11/03/2026, 11:11:17"
+}

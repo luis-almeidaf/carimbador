@@ -1,0 +1,11 @@
+📌 ENCERRAMENTO – PRÉ-MASSIVA
+Cliente: <NOME>
+Serviço: <TIPO>
+BD: <NUMERO>
+
+Indicador: Possível falha coletiva
+Evidências: log
+
+Encaminhamento: Pré-Massiva
+Responsável: undefined
+Data: 11/03/2026, 14:12:38

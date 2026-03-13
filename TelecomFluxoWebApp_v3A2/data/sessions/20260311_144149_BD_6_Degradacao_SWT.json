@@ -1,0 +1,47 @@
+{
+  "flow": "6_Degradacao_SWT",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "testes",
+    "Evidências iniciais (logs/prints/horários)": "teste",
+    "segmento": "SWT",
+    "Porta rede VIVO/SWT": "ERROS",
+    "Porta conexão CPE": "DOWN",
+    "falha_identificada": "falha foda",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "x1",
+      "text": "Porta rede VIVO/SWT",
+      "action": "select",
+      "set": {
+        "Porta rede VIVO/SWT": "ERROS"
+      }
+    },
+    {
+      "id": "x2",
+      "text": "Porta conexão CPE",
+      "action": "select",
+      "set": {
+        "Porta conexão CPE": "DOWN"
+      }
+    },
+    {
+      "id": "x3",
+      "text": "Após orientação (reset/teste direto), normalizou?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "x4",
+      "text": "Falha identificada",
+      "action": "note",
+      "set": {
+        "falha_identificada": "falha foda"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO AO DIAGNÓSTICO\nCliente: POLICIA MILITAR DO ESTADO DE SAO PAULO\nServiço: <TIPO>\nBD: 6596320\n\nFalha Identificada: falha foda\nConclusão Técnica: \nTestes Executados: Ping, ARP, Interface\n\nEncaminhamento: Diagnóstico N2\nResponsável: Sgoe\nData: 11/03/2026, 14:41:49"
+}

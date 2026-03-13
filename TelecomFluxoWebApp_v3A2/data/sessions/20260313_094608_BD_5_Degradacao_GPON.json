@@ -1,0 +1,60 @@
+{
+  "flow": "5_Degradacao_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "exemplo",
+    "Evidências iniciais (logs/prints/horários)": "exemplo",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "Perda de ping (%)": "100",
+    "Nível de sinal (dBm)": "-25",
+    "motivo_campo": "Sinal óptico abaixo do mínimo",
+    "falha_identificada": "Interrompido interface up no gpon",
+    "testes_realizados": "Ping, ARP, Interface",
+    "segmento": "IP Dedicado",
+    "Destino (URL/IP/porta)": "google.com/10",
+    "conclusao_tecnica": "Cliente reclama de perca de pacotes, não encontrando falhas na rede interna nem na rede vivo",
+    "Perda de pacotes (%)": "50",
+    "Latência (ms)": "200"
+  },
+  "trail": [
+    {
+      "id": "d1",
+      "text": "Perda de pacotes (%)",
+      "action": "input",
+      "set": {
+        "Perda de pacotes (%)": "50"
+      }
+    },
+    {
+      "id": "d2",
+      "text": "Latência (ms)",
+      "action": "input",
+      "set": {
+        "Latência (ms)": "200"
+      }
+    },
+    {
+      "id": "d3",
+      "text": "Túnel Metro/Fusion OK?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "d4",
+      "text": "LAN sem quedas/erros?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "d7",
+      "text": "Conclusão técnica",
+      "action": "note",
+      "set": {
+        "conclusao_tecnica": "Cliente reclama de perca de pacotes, não encontrando falhas na rede interna nem na rede vivo"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO AO DIAGNÓSTICO\nCliente: SAO PAULO SECRETARIA DO VERDE E DO MEIO AMBIENTE\nServiço: REDE IP MULTI SERVIÇOS / PRODAM   N\nBD: 6605219\n\nFalha Identificada: Interrompido interface up no gpon\nConclusão Técnica: Cliente reclama de perca de pacotes, não encontrando falhas na rede interna nem na rede vivo\nTestes Executados: Ping, ARP, Interface\n\nEncaminhamento: Diagnóstico N2\nResponsável: Sgoe\nData: 13/03/2026, 09:46:08"
+}

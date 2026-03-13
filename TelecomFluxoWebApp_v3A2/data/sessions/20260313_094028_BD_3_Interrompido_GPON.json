@@ -1,0 +1,87 @@
+{
+  "flow": "3_Interrompido_GPON",
+  "bd": "BD",
+  "vars": {
+    "Validou endereço do chamado?": "Sim",
+    "Detalhes da reclamação": "exemplo",
+    "Evidências iniciais (logs/prints/horários)": "exemplo",
+    "Segmento": "GPON",
+    "Status da interface": "UP",
+    "Perda de ping (%)": "100",
+    "Nível de sinal (dBm)": "-25",
+    "motivo_campo": "Sinal óptico abaixo do mínimo",
+    "falha_identificada": "Interrompido interface up no gpon",
+    "testes_realizados": "Ping, ARP, Interface"
+  },
+  "trail": [
+    {
+      "id": "g1",
+      "text": "Localize o cliente no inventário (GPON)",
+      "action": "continue",
+      "set": {}
+    },
+    {
+      "id": "g2",
+      "text": "Status da interface",
+      "action": "select",
+      "set": {
+        "Status da interface": "UP"
+      }
+    },
+    {
+      "id": "g3",
+      "text": "Conectividade OK (Ping/ARP)?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g4",
+      "text": "Perda de ping (%)",
+      "action": "input",
+      "set": {
+        "Perda de ping (%)": "100"
+      }
+    },
+    {
+      "id": "g5",
+      "text": "Consta massiva para a região?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g6",
+      "text": "Nível de sinal (dBm)",
+      "action": "input",
+      "set": {
+        "Nível de sinal (dBm)": "-25"
+      }
+    },
+    {
+      "id": "g7",
+      "text": "Sinal abaixo do mínimo? (<= -27 dBm)",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g8",
+      "text": "Foi possível contato com o cliente?",
+      "action": "yes",
+      "set": {}
+    },
+    {
+      "id": "g9",
+      "text": "Após ações (reset/cabos/teste direto), normalizou?",
+      "action": "no",
+      "set": {}
+    },
+    {
+      "id": "g11",
+      "text": "Falha identificada",
+      "action": "note",
+      "set": {
+        "falha_identificada": "Interrompido interface up no gpon"
+      }
+    }
+  ],
+  "carimbo": "📌 ENCERRAMENTO – ENVIADO AO DIAGNÓSTICO\nCliente: SAO PAULO SECRETARIA DO VERDE E DO MEIO AMBIENTE\nServiço: REDE IP MULTI SERVIÇOS / PRODAM   N\nBD: 6605219\n\nFalha Identificada: Interrompido interface up no gpon\nConclusão Técnica: \nTestes Executados: Ping, ARP, Interface\n\nEncaminhamento: Diagnóstico N2\nResponsável: Sgoe\nData: 13/03/2026, 09:40:28"
+}
