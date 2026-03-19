@@ -1,0 +1,424 @@
+{
+    "fluxo_inicial": {
+        "title": "Fluxo Inicial",
+        "version": "1.1",
+        "start": "checklist_intro",
+        "steps": [
+            {
+                "id": "checklist_intro",
+                "type": "message",
+                "text": "CHECKLIST INICIAL",
+                "next": "localizar_cliente_inventario"
+            },
+            {
+                "id": "localizar_cliente_inventario",
+                "type": "yesno",
+                "text": "Localizou o cliente na REDE IP conforme inventário",
+                "yes": "interface_status",
+                "no": "buscar_ultimos_logs"
+            },
+            {
+                "id": "interface_status",
+                "type": "choice",
+                "text": "Status da interface",
+                "options": [
+                    {
+                        "value": "UP",
+                        "label": "UP/UP",
+                        "next": "teste_conectividade"
+                    },
+                    {
+                        "value": "DOWN",
+                        "label": "DOWN",
+                        "next": "consta_massiva"
+                    }
+                ],
+                "prev": "localizar_cliente_inventario"
+            },
+            {
+                "id": "buscar_ultimos_logs",
+                "type": "yesno",
+                "text": "Encontrou logs de chamados anteriores?",
+                "yes": "interface_status",
+                "no": "validar_manobra"
+            },
+            {
+                "id": "validar_manobra",
+                "type": "yesno",
+                "text": "Manobrado -- Validar texto",
+                "yes": "interface_status",
+                "no": "END:DIAGNOSTICO"
+            },
+            {
+                "id": "teste_conectividade",
+                "type": "yesno",
+                "text": "Conectividade está OK?",
+                "yes": "contato_cliente",
+                "no": "contato_cliente_int",
+                "prev": "interface_status"
+            },
+            {
+                "id": "consta_massiva",
+                "type": "yesno",
+                "text": "Consta massiva para região?",
+                "yes": "END:PRE_MASSIVA",
+                "no": "validar_manobra"
+            },
+            {
+                "id": "contato_cliente",
+                "type": "yesno",
+                "text": "Conseguiu contato com o cliente?",
+                "yes": "ci_chamado",
+                "no": "sem_contato_opcoes",
+                "prev": "teste_conectividade"
+            },
+            {
+                "id": "contato_cliente_int",
+                "type": "yesno",
+                "text": "Conseguiu contato com o cliente?",
+                "yes": "valida_interrompido",
+                "no": "reclamacao_tratada_via_reparo",
+                "prev": "teste_conectividade"
+            },
+            {
+                "id": "valida_interrompido",
+                "type": "yesno",
+                "text": "Interrompido?",
+                "yes": "sel_segmento_interrompido",
+                "no": "reclamacao_tratada_via_reparo",
+                "prev": "teste_conectividade"
+            },
+            {
+                "id": "reclamacao_tratada_via_reparo",
+                "type": "yesno",
+                "text": "Reclamação tratada via reparo?",
+                "yes": "classificar_reclamacao",
+                "no": "END:ENCERRA_BD",
+                "prev": "contato_cliente_int"
+
+            },
+            {
+                "id": "sem_contato_opcoes",
+                "type": "choice",
+                "text": "Sem contato. O que deseja fazer?",
+                "options": [
+                    {
+                        "label": "Tentar contato novamente agora",
+                        "next": "contato_cliente",
+                        "prev": "teste_conectividade"
+                    },
+                    {
+                        "label": "Agendar retorno para depois",
+                        "next": "agendar_retorno",
+                        "prev": "teste_conectividade"
+                    },
+                    {
+                        "label": "Encerrar sem contato",
+                        "next": "END:SEM_CONTATO",
+                        "prev": "teste_conectividade"
+                    }
+                ]
+            },
+            {
+                "id": "agendar_retorno",
+                "type": "input",
+                "text": "Informe data/hora ou janela para novo contato",
+                "placeholder": "Ex.: hoje às 14:30 / amanhã 09:00–10:00",
+                "next": "END:AGENDADO_RETORNO"
+            },
+            {
+                "id": "ci_chamado",
+                "type": "input",
+                "text": "Existe chamado aberto? Informe o número/ID (ou 'não')",
+                "placeholder": "Ex.: INC123456 / não",
+                "next": "ci_endereco",
+                "prev": "contato_cliente"
+            },
+            {
+                "id": "ci_endereco",
+                "type": "input",
+                "text": "Validar endereço/contrato do circuito",
+                "placeholder": "Endereço/ID do contrato/circuito",
+                "next": "ci_dados_cliente",
+                "prev": "ci_chamado"
+            },
+            {
+                "id": "ci_dados_cliente",
+                "type": "input",
+                "text": "Validar dados do cliente (nome/unidade/identificação)",
+                "placeholder": "Nome/Unidade/ID",
+                "next": "ci_telefone",
+                "prev": "ci_endereco"
+            },
+            {
+                "id": "ci_telefone",
+                "type": "input",
+                "text": "Validar telefone de retorno",
+                "placeholder": "DDD + número",
+                "next": "ci_no_local",
+                "prev": "ci_dados_cliente"
+            },
+            {
+                "id": "ci_no_local",
+                "type": "yesno",
+                "text": "Cliente está no local para testes?",
+                "yes": "ci_disponibilidade",
+                "no": "ci_disponibilidade",
+                "prev": "ci_telefone"
+            },
+            {
+                "id": "ci_disponibilidade",
+                "type": "input",
+                "text": "Disponibilidade para testes (agora/horário)",
+                "placeholder": "Ex.: agora / hoje 18h / amanhã 9–10h",
+                "next": "ci_reset",
+                "prev": "ci_no_local"
+            },
+            {
+                "id": "ci_reset",
+                "type": "yesno",
+                "text": "Já foi realizado reset/religue dos equipamentos?",
+                "yes": "ci_detalhes",
+                "no": "ci_detalhes",
+                "prev": "ci_disponibilidade"
+            },
+            {
+                "id": "ci_detalhes",
+                "type": "input",
+                "text": "Entender detalhes da reclamação",
+                "placeholder": "O que não funciona? Desde quando? Impacto?",
+                "next": "ci_evidencias",
+                "prev": "ci_reset"
+            },
+            {
+                "id": "ci_evidencias",
+                "type": "input",
+                "text": "Coletar evidências iniciais",
+                "placeholder": "Horários, origem/destino, protocolos, etc.",
+                "next": "classificar_reclamacao",
+                "prev": "ci_detalhes"
+            },
+            {
+                "id": "classificar_reclamacao",
+                "type": "choice",
+                "text": "Qual é a reclamação?",
+                "options": [
+                    {
+                        "label": "Interrompido",
+                        "next": "sel_segmento_interrompido"
+                    },
+                    {
+                        "label": "Degradação",
+                        "next": "sel_segmento_degradacao"
+                    },
+                    {
+                        "label": "Falha de Acesso Específico (IP Dedicado / VPN)",
+                        "next": "fe_q1"
+                    }
+                ],
+                "prev": "ci_evidencias"
+            },
+            {
+                "id": "sel_segmento_interrompido",
+                "type": "choice",
+                "text": "Interrompido — qual o segmento?",
+                "options": [
+                    {
+                        "label": "GPON",
+                        "next": "gpon_int_start"
+                    },
+                    {
+                        "label": "SWT",
+                        "next": "swt_int_start"
+                    }
+                ],
+                "prev": "classificar_reclamacao"
+            },
+            {
+                "id": "sel_segmento_degradacao",
+                "type": "choice",
+                "text": "Degradação — qual o segmento?",
+                "options": [
+                    {
+                        "label": "GPON",
+                        "next": "gpon_deg_start"
+                    },
+                    {
+                        "label": "SWT",
+                        "next": "swt_deg_start"
+                    }
+                ],
+                "prev": "classificar_reclamacao"
+            },
+            {
+                "id": "fe_q1",
+                "type": "choice",
+                "text": "Falha de Acesso Específico — Qual a reclamação?",
+                "options": [
+                    {
+                        "label": "Não acessa site específico",
+                        "next": "fe_ipd_checklist"
+                    },
+                    {
+                        "label": "Não comunica com servidor específico",
+                        "next": "fe_ipd_checklist"
+                    },
+                    {
+                        "label": "Porta bloqueada",
+                        "next": "fe_ipd_checklist"
+                    },
+                    {
+                        "label": "Falha em aplicação",
+                        "next": "fe_ipd_checklist"
+                    },
+                    {
+                        "label": "Não fecha VPN",
+                        "next": "fe_vpn_sub"
+                    }
+                ],
+                "prev": "classificar_reclamacao"
+            }
+        ]
+    },
+    "fluxo_int_gpon": {
+        "title": "Fluxo interrompido GPON",
+        "version": "1.1",
+        "start": "gpon_int_start",
+        "steps": [
+            {
+                "id": "gpon_int_start",
+                "type": "message",
+                "text": "Interrompido – GPON: início do diagnóstico.",
+                "next": "ping_gpon"
+            },
+            {
+                "id": "ping_gpon",
+                "type": "yesno",
+                "text": "Teste Ping/ARP para o CPE/ONT (WAN) está OK?",
+                "yes": "acesso_cpe",
+                "no": "acesso_olt",
+                "prev": "gpon_int_start"
+            },
+            {
+                "id": "acesso_cpe",
+                "type": "yesno",
+                "text": "Autenticação OK? (Testar com todas as senhas)",
+                "yes": "verificar_lan_arp",
+                "no": "END:DIAGNOSTICO",
+                "prev": "ping_gpon"
+            },
+            {
+                "id": "verificar_lan_arp",
+                "type": "yesno",
+                "text": "Rede cliente OK?",
+                "yes": "teste_servico",
+                "no": "contato_cliente",
+                "prev": "acesso_cpe"
+            },
+            {
+                "id": "teste_servico",
+                "type": "yesno",
+                "text": "Teste OK?",
+                "yes": "normalizou_cpe",
+                "no": "END:DIAGNOSTICO",
+                "prev": "verificar_lan_arp"
+            },
+            {
+                "id": "normalizou_cpe",
+                "type": "yesno",
+                "text": "Normalizou?",
+                "yes": "END:NORMALIZADO",
+                "no": "END:DIAGNOSTICO",
+                "prev": "teste_servico"
+            },
+            {
+                "id": "acesso_olt",
+                "type": "yesno",
+                "text": "Sem ping para o CPE. Acesso à OLT está OK?",
+                "yes": "cliente_posicao",
+                "no": "gpon_massiva_acesso_olt",
+                "prev": "ping_gpon"
+            },
+            {
+                "id": "cliente_posicao",
+                "type": "yesno",
+                "text": "Localizou posição do cliente?",
+                "yes": "gpon_sincronismo",
+                "no": "END:DIAGNOSTICO",
+                "prev": "ping_gpon"
+            },
+            {
+                "id": "gpon_massiva_acesso_olt",
+                "type": "yesno",
+                "text": "Há Manutenção (TAP) ou Massiva na região?",
+                "yes": "END:MASSIVA",
+                "no": "END:DIAGNOSTICO",
+                "prev": "acesso_olt"
+            },
+            {
+                "id": "gpon_massiva_pon",
+                "type": "yesno",
+                "text": "Há Manutenção (TAP) ou Massiva na região?",
+                "yes": "END:MASSIVA",
+                "no": "END:PRE_MASSIVA",
+                "prev": "gpon_sincronismo"
+            },
+            {
+                "id": "gpon_sincronismo",
+                "type": "yesno",
+                "text": "Sincronismo da fibra está OK?",
+                "yes": "gpon_lan_ont",
+                "no": "gpon_porta_pon",
+                "prev": "cliente_posicao"
+            },
+            {
+                "id": "gpon_porta_pon",
+                "type": "yesno",
+                "text": "Porta PON está UP?",
+                "yes": "END:CAMPO",
+                "no": "gpon_massiva_pon",
+                "prev": "gpon_sincronismo"
+            },            
+            {
+                "id": "gpon_lan_ont",
+                "type": "yesno",
+                "text": "Lan OK?",
+                "yes": "gpon_nivel_sinal",
+                "no": "cliente_deve_verificar_cabos",
+                "prev": "gpon_sincronismo"
+            },
+            {
+                "id": "cliente_deve_verificar_cabos",
+                "type": "yesno",
+                "text": "Cliente pode verificar os cabos?",
+                "yes": "gpon_normalizou",
+                "no": "END:CAMPO",
+                "prev": "gpon_lan_ont"
+            },
+            {
+                "id": "gpon_normalizou",
+                "type": "yesno",
+                "text": "Normalizou?",
+                "yes": "END:CAMPO",
+                "no": "END:NORMALIZADO",
+                "prev": "cliente_deve_verificar_cabos"
+            },
+            {
+                "id": "gpon_nivel_sinal",
+                "type": "yesno",
+                "text": "Sinal de nível OK?",
+                "yes": "verificar_fusion_metro",
+                "no": "END:CAMPO",
+                "prev": "gpon_lan_ont"
+            },
+                        {
+                "id": "verificar_fusion_metro",
+                "type": "yesno",
+                "text": "Tunel Metro OK?",
+                "yes": "END:DIAGNOSTICO",
+                "no": "END:PRE_MASSIVA",
+                "prev": "gpon_lan_ont"
+            }
+        ]
+    }
+}
