@@ -1,0 +1,171 @@
+import auth from "./auth.js";
+import api from "./api.js";
+import stateModule from "./state.js";
+import { startInitialFlow, advance, loadflow } from "./flow.js";
+import { renderBdInfo, renderNode, renderVars } from "./render.js";
+
+async function init() {
+  const user = await auth.getLoggedUser();
+
+  if (!user) {
+    window.location.href = "/login";
+    return;
+  }
+
+  const fluxoInicial = await api.buscaFluxoInicial();
+  Object.assign(stateModule.state.flows, fluxoInicial);
+  stateModule.indexFlows();
+}
+
+async function processaBd() {
+  const infoBd = await api.consultaBd();
+  if (!infoBd) return;
+
+  const fluxoNome = api.segmentaFluxoBd(infoBd);
+  await loadflow(fluxoNome);
+
+  stateModule.indexFlows();
+  startInitialFlow();
+  renderBdInfo(infoBd);
+}
+
+
+document.addEventListener("flow:advanced", () => {
+  renderNode(advance);
+  renderVars();
+});
+
+document.getElementById("logoutBtn").addEventListener("click", auth.logout);
+document.getElementById("bdInputBtn").addEventListener("click", processaBd);
+
+
+
+import auth from "./auth.js";
+import stateModule from "./state.js";
+
+
+async function consultaBd() {
+  const usuarioLogado = await auth.getLoggedUser();
+
+  if (!usuarioLogado) {
+    window.location.href = "/login";
+    return;
+  }
+
+  const bdInputElement = document.getElementById("bdInput");
+  const bdInputValue = bdInputElement.value;
+
+  const url = `/api/consulta_bd/${bdInputValue}`;
+  try {
+    const response = await fetch(url);
+    const infoBd = await response.json();
+
+    stateModule.state.infoBd = infoBd;
+
+    if (Object.values(infoBd).includes("ERRO CONSULTA")) {
+      document.getElementById("bdsInfo").innerHTML =
+        "<p style='color:red'>Erro na consulta</p>";
+      return;
+    }
+
+    //TODO terminar aqui
+    const usuarioResponsavelBd = infoBd.usuario_responsavel;
+    const nomeUsuarioLogado = usuarioLogado.colaborador;
+
+    if (usuarioResponsavelBd !== nomeUsuarioLogado) {
+      alert("Só é possível consultar um BD que você já assumiu.");
+      return;
+    }
+
+    return infoBd;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+function segmentaFluxoBd(infoBd) {
+  //TODO validar nomes corretamente
+  const segmento = infoBd.rede;
+  const produto = infoBd.produto;
+
+  if (segmento === "VIVO 1" && produto === "DADOS")
+    return "fluxo_inicial_dados_v1";
+  if (segmento === "VIVO 2" && produto === "DADOS")
+    return "fluxo_inicial_dados_v2";
+  if (segmento === "VIVO 1" && produto === "SIP") return "fluxo_inicial_sip_v1";
+  if (segmento === "VIVO 2" && produto === "SIP") return "fluxo_inicial_sip_v2";
+  if (segmento === "VIVO 1" && produto === "DDR") return "fluxo_inicial_ddr_v1";
+  if (segmento === "VIVO 2" && produto === "DDR") return "fluxo_inicial_ddr_v2";
+}
+
+
+async function buscaFluxo(nomeFluxo) {
+  return await fetch(`/api/${nomeFluxo}`).then((r) => r.json());
+}
+
+const api = {
+  consultaBd,
+  buscaFluxo,
+  segmentaFluxoBd
+};
+
+export default api;
+
+
+import stateModule from "./state.js";
+import { finish } from "./carimbo.js";
+import api from "./api.js";
+
+function startInitialFlow() {
+  const { state } = stateModule;
+
+  const flow = state.flows[state.selectedFlow];
+
+  state.currentNodeId = flow.start;
+  state.vars = Object.assign({}, flow.defaults || {});
+
+  document.dispatchEvent(new CustomEvent("flow:advanced"));
+}
+
+async function loadflow(fluxoNome) {
+  const { state } = stateModule;
+  const flows = await api.buscaFlow(fluxoNome);
+  Object.assign(state.flows, flows);
+  state.selectedFlow = fluxoNome;
+  stateModule.indexFlows();
+}
+
+async function advance(nextId, setVars) {
+  const { state, nodeIndex } = stateModule;
+
+  Object.assign(state.vars, setVars || {});
+
+  if (nextId && nextId.startsWith("END:")) {
+    const endType = nextId.split(":")[1];
+    alert("carimbo gerado -- validar aqui");
+    await finish(endType);
+    return;
+  }
+
+  if (nextId.startsWith("FLUXO:")) {
+    const flowName = nextId.split(":")[1];
+    await loadflow(flowName);
+    nextId = stateModule.state.flows[flowName].start;
+  }
+
+  const flowName = nodeIndex[nextId];
+  if (flowName) {
+    state.selectedFlow = flowName;
+  }
+
+  state.currentNodeId = nextId;
+  document.dispatchEvent(new CustomEvent("flow:advanced"));
+}
+
+const flow = { startInitialFlow, advance, loadflow };
+
+export default flow;
+export { startInitialFlow, advance, loadflow};
+
+
+init();
