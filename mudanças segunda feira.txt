@@ -1,0 +1,16 @@
+erros = []
+
+if len(vantive) > 0:
+    erros.append({"campo": "vantive", "mensagem": "mensagem de erro vantive"})
+if len(star) > 0:
+    erros.append({"campo": "star", "mensagem": "mensagem de erro star"})
+
+return jsonify({"erros": erros})
+No frontend fica simples:
+jsdata.erros.forEach(erro => console.log(erro.mensagem));
+Em vez de ficar verificando se cada chave existe no dict. Se não tiver erros, retorna a lista vazia e o frontend só checa if (data.erros.length > 0).outra questão vantive = repository.consulta_vantive(bd) retorma um panda dataframe, verificar o len é mais rapido que o ,empty?5:07 PMO .empty é mais rápido e semânticamente mais correto para DataFrames. O len() calcula o tamanho do DataFrame inteiro, enquanto o .empty só verifica se há linhas, sem contar todas.
+python# menos eficiente
+if len(vantive) > 0:
+
+# mais eficiente e mais legível
+if not vantive.empty:
